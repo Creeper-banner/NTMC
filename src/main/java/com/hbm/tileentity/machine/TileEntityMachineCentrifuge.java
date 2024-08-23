@@ -49,7 +49,7 @@ public class TileEntityMachineCentrifuge extends TileEntityMachineBase implement
 
 	//configurable values
 	public static int maxPower = 100000;
-	public static int processingSpeed = 200;
+	public static int processingSpeed = 160;
 	public static int baseConsumption = 200;
 
 	public String getConfigName() {
@@ -216,7 +216,7 @@ public class TileEntityMachineCentrifuge extends TileEntityMachineBase implement
 				progress += speed;
 
 				if(this.progress >= TileEntityMachineCentrifuge.processingSpeed) {
-					this.progress = 0;
+					this.progress -= TileEntityMachineCentrifuge.processingSpeed;
 					this.processItem();
 				}
 			} else {
