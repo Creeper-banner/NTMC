@@ -1360,7 +1360,6 @@ public class MainRegistry {
 		ignoreMappings.add("hbm:item.gun_cryolator");
 		ignoreMappings.add("hbm:item.gun_mp");
 		ignoreMappings.add("hbm:item.gun_bolter_digamma");
-		ignoreMappings.add("hbm:item.gun_zomg");
 		ignoreMappings.add("hbm:item.gun_super_shotgun");
 		ignoreMappings.add("hbm:item.gun_moist_nugget");
 		ignoreMappings.add("hbm:item.gun_revolver_inverted");
@@ -1719,6 +1718,7 @@ public class MainRegistry {
 		remapItems.put("hbm:item.briquette_lignite", ModItems.briquette);
 		remapItems.put("hbm:item.antiknock", ModItems.fuel_additive);
 		remapItems.put("hbm:item.kit_toolbox_empty", ModItems.toolbox);
+		remapItems.put("hbm:item.gun_zomg", ModItems.gun_pppop);
 
 		for(MissingMapping mapping : event.get()) {
 

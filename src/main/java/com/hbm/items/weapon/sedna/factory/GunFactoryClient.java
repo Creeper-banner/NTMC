@@ -35,7 +35,13 @@ import com.hbm.main.ResourceManager;
 import com.hbm.render.item.weapon.sedna.*;
 import com.hbm.tileentity.machine.storage.TileEntityBatterySocket;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import com.hbm.items.ModItems;
+
 import net.minecraftforge.client.MinecraftForgeClient;
+import org.lwjgl.opengl.GL11;
+import net.minecraft.client.renderer.Tessellator;
 
 public class GunFactoryClient {
 
@@ -231,6 +237,358 @@ public class GunFactoryClient {
 		setRendererBulkBeam(LegoClient.RENDER_LASER_PURPLE, energy_lacunae, energy_lacunae_overcharge, energy_lacunae_ir);
 		setRendererBulkBeam(LegoClient.RENDER_LASER_EMERALD, energy_emerald, energy_emerald_overcharge, energy_emerald_ir);
 		
+		BiConsumer<EntityBulletBaseMK4, Float> pppopRenderer = (bullet, interp) -> {
+			boolean superuser = bullet.getBulletConfig() == XFactoryEnergy.energy_pppop;
+
+			GL11.glPushMatrix();
+			GL11.glDisable(GL11.GL_TEXTURE_2D);
+			GL11.glDisable(GL11.GL_CULL_FACE);
+			GL11.glDisable(GL11.GL_LIGHTING);
+			GL11.glShadeModel(GL11.GL_SMOOTH);
+			GL11.glEnable(GL11.GL_BLEND);
+			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
+			GL11.glDepthMask(false);
+
+			GL11.glScalef(1F/4F, 1F/8F, 1F/8F);
+			GL11.glScalef(-1, 1, 1);
+			GL11.glScalef(2, 2, 2);
+			
+			Tessellator tess = Tessellator.instance;
+			
+			if (superuser) {
+				float r1 = 0.25F;
+				float g1 = 0.0F;
+				float b1 = 0.45F;
+
+				tess.startDrawing(4);
+				tess.setColorRGBA_F(r1, g1, b1, 1.0F);
+				tess.addVertex(6, 0, 0);
+				tess.setColorRGBA_F(r1, g1, b1, 0.0F);
+				tess.addVertex(3, -1, -1);
+				tess.addVertex(3, 1, -1);
+				tess.draw();
+
+				tess.startDrawing(4);
+				tess.setColorRGBA_F(r1, g1, b1, 0.0F);
+				tess.addVertex(3, -1, 1);
+				tess.setColorRGBA_F(r1, g1, b1, 1.0F);
+				tess.addVertex(6, 0, 0);
+				tess.setColorRGBA_F(r1, g1, b1, 0.0F);
+				tess.addVertex(3, 1, 1);
+				tess.draw();
+
+				tess.startDrawing(4);
+				tess.setColorRGBA_F(r1, g1, b1, 0.0F);
+				tess.addVertex(3, -1, -1);
+				tess.setColorRGBA_F(r1, g1, b1, 1.0F);
+				tess.addVertex(6, 0, 0);
+				tess.setColorRGBA_F(r1, g1, b1, 0.0F);
+				tess.addVertex(3, -1, 1);
+				tess.draw();
+
+				tess.startDrawing(4);
+				tess.setColorRGBA_F(r1, g1, b1, 1.0F);
+				tess.addVertex(6, 0, 0);
+				tess.setColorRGBA_F(r1, g1, b1, 0.0F);
+				tess.addVertex(3, 1, -1);
+				tess.setColorRGBA_F(r1, g1, b1, 0.0F);
+				tess.addVertex(3, 1, 1);
+				tess.draw();
+				
+				tess.startDrawing(4);
+				tess.setColorRGBA_F(r1, g1, b1, 1.0F);
+				tess.addVertex(6, 0, 0);
+				tess.addVertex(4, -0.5, -0.5);
+				tess.addVertex(4, 0.5, -0.5);
+				tess.draw();
+
+				tess.startDrawing(4);
+				tess.setColorRGBA_F(r1, g1, b1, 1.0F);
+				tess.addVertex(4, -0.5, 0.5);
+				tess.addVertex(6, 0, 0);
+				tess.addVertex(4, 0.5, 0.5);
+				tess.draw();
+
+				tess.startDrawing(4);
+				tess.setColorRGBA_F(r1, g1, b1, 1.0F);
+				tess.addVertex(4, -0.5, -0.5);
+				tess.addVertex(6, 0, 0);
+				tess.addVertex(4, -0.5, 0.5);
+				tess.draw();
+
+				tess.startDrawing(4);
+				tess.setColorRGBA_F(r1, g1, b1, 1.0F);
+				tess.addVertex(6, 0, 0);
+				tess.addVertex(4, 0.5, -0.5);
+				tess.addVertex(4, 0.5, 0.5);
+				tess.draw();
+				
+				tess.startDrawingQuads();
+				tess.setColorRGBA_F(r1, g1, b1, 1.0F);
+				tess.addVertex(4, 0.5, -0.5);
+				tess.addVertex(4, 0.5, 0.5);
+				tess.setColorRGBA_F(r1, g1, b1, 0.0F);
+				tess.addVertex(0, 0.5, 0.5);
+				tess.addVertex(0, 0.5, -0.5);
+				tess.draw();
+
+				tess.startDrawingQuads();
+				tess.setColorRGBA_F(r1, g1, b1, 1.0F);
+				tess.addVertex(4, -0.5, -0.5);
+				tess.addVertex(4, -0.5, 0.5);
+				tess.setColorRGBA_F(r1, g1, b1, 0.0F);
+				tess.addVertex(0, -0.5, 0.5);
+				tess.addVertex(0, -0.5, -0.5);
+				tess.draw();
+
+				tess.startDrawingQuads();
+				tess.setColorRGBA_F(r1, g1, b1, 1.0F);
+				tess.addVertex(4, -0.5, 0.5);
+				tess.addVertex(4, 0.5, 0.5);
+				tess.setColorRGBA_F(r1, g1, b1, 0.0F);
+				tess.addVertex(0, 0.5, 0.5);
+				tess.addVertex(0, -0.5, 0.5);
+				tess.draw();
+
+				tess.startDrawingQuads();
+				tess.setColorRGBA_F(r1, g1, b1, 1.0F);
+				tess.addVertex(4, -0.5, -0.5);
+				tess.addVertex(4, 0.5, -0.5);
+				tess.setColorRGBA_F(r1, g1, b1, 0.0F);
+				tess.addVertex(0, 0.5, -0.5);
+				tess.addVertex(0, -0.5, -0.5);
+				tess.draw();
+
+				GL11.glPushMatrix();
+				GL11.glScalef(1.6F, 3.2F, 3.2F);
+				float r2 = 0.9F;
+				float g2 = 0.0F;
+				float b2 = 1.0F;
+				
+				double time = (double) bullet.ticksExisted + interp;
+				float pulse = 0.5F + (float) Math.sin(time * 0.8D) * 0.3F;
+				float glowAlpha = 0.6F * pulse;
+
+				tess.startDrawing(4);
+				tess.setColorRGBA_F(r2, g2, b2, glowAlpha);
+				tess.addVertex(6, 0, 0);
+				tess.setColorRGBA_F(r2, g2, b2, 0.0F);
+				tess.addVertex(3, -1, -1);
+				tess.addVertex(3, 1, -1);
+				tess.draw();
+
+				tess.startDrawing(4);
+				tess.setColorRGBA_F(r2, g2, b2, 0.0F);
+				tess.addVertex(3, -1, 1);
+				tess.setColorRGBA_F(r2, g2, b2, glowAlpha);
+				tess.addVertex(6, 0, 0);
+				tess.setColorRGBA_F(r2, g2, b2, 0.0F);
+				tess.addVertex(3, 1, 1);
+				tess.draw();
+
+				tess.startDrawing(4);
+				tess.setColorRGBA_F(r2, g2, b2, 0.0F);
+				tess.addVertex(3, -1, -1);
+				tess.setColorRGBA_F(r2, g2, b2, glowAlpha);
+				tess.addVertex(6, 0, 0);
+				tess.setColorRGBA_F(r2, g2, b2, 0.0F);
+				tess.addVertex(3, -1, 1);
+				tess.draw();
+
+				tess.startDrawing(4);
+				tess.setColorRGBA_F(r2, g2, b2, glowAlpha);
+				tess.addVertex(6, 0, 0);
+				tess.setColorRGBA_F(r2, g2, b2, 0.0F);
+				tess.addVertex(3, 1, -1);
+				tess.setColorRGBA_F(r2, g2, b2, 0.0F);
+				tess.addVertex(3, 1, 1);
+				tess.draw();
+				
+				tess.startDrawing(4);
+				tess.setColorRGBA_F(r2, g2, b2, glowAlpha);
+				tess.addVertex(6, 0, 0);
+				tess.addVertex(4, -0.5, -0.5);
+				tess.addVertex(4, 0.5, -0.5);
+				tess.draw();
+
+				tess.startDrawing(4);
+				tess.setColorRGBA_F(r2, g2, b2, glowAlpha);
+				tess.addVertex(4, -0.5, 0.5);
+				tess.addVertex(6, 0, 0);
+				tess.addVertex(4, 0.5, 0.5);
+				tess.draw();
+
+				tess.startDrawing(4);
+				tess.setColorRGBA_F(r2, g2, b2, glowAlpha);
+				tess.addVertex(4, -0.5, -0.5);
+				tess.addVertex(6, 0, 0);
+				tess.addVertex(4, -0.5, 0.5);
+				tess.draw();
+
+				tess.startDrawing(4);
+				tess.setColorRGBA_F(r2, g2, b2, glowAlpha);
+				tess.addVertex(6, 0, 0);
+				tess.addVertex(4, 0.5, -0.5);
+				tess.addVertex(4, 0.5, 0.5);
+				tess.draw();
+				
+				tess.startDrawingQuads();
+				tess.setColorRGBA_F(r2, g2, b2, glowAlpha);
+				tess.addVertex(4, 0.5, -0.5);
+				tess.addVertex(4, 0.5, 0.5);
+				tess.setColorRGBA_F(r2, g2, b2, 0.0F);
+				tess.addVertex(0, 0.5, 0.5);
+				tess.addVertex(0, 0.5, -0.5);
+				tess.draw();
+
+				tess.startDrawingQuads();
+				tess.setColorRGBA_F(r2, g2, b2, glowAlpha);
+				tess.addVertex(4, -0.5, -0.5);
+				tess.addVertex(4, -0.5, 0.5);
+				tess.setColorRGBA_F(r2, g2, b2, 0.0F);
+				tess.addVertex(0, -0.5, 0.5);
+				tess.addVertex(0, -0.5, -0.5);
+				tess.draw();
+
+				tess.startDrawingQuads();
+				tess.setColorRGBA_F(r2, g2, b2, glowAlpha);
+				tess.addVertex(4, -0.5, 0.5);
+				tess.addVertex(4, 0.5, 0.5);
+				tess.setColorRGBA_F(r2, g2, b2, 0.0F);
+				tess.addVertex(0, 0.5, 0.5);
+				tess.addVertex(0, -0.5, 0.5);
+				tess.draw();
+
+				tess.startDrawingQuads();
+				tess.setColorRGBA_F(r2, g2, b2, glowAlpha);
+				tess.addVertex(4, -0.5, -0.5);
+				tess.addVertex(4, 0.5, -0.5);
+				tess.setColorRGBA_F(r2, g2, b2, 0.0F);
+				tess.addVertex(0, 0.5, -0.5);
+				tess.addVertex(0, -0.5, -0.5);
+				tess.draw();
+				GL11.glPopMatrix();
+			} else {
+				float red = 1.0F;
+				float green = 1.0F;
+				float blue = 1.0F;
+				
+				int eID = bullet.getEntityId();
+				java.util.Random rand = new java.util.Random(eID * eID);
+				red = rand.nextInt(2) * 0.6F;
+				green = rand.nextInt(2) * 0.6F;
+				blue = rand.nextInt(2) * 0.6F;
+
+				tess.startDrawing(4);
+				tess.setColorRGBA_F(red, green, blue, 1);
+				tess.addVertex(6, 0, 0);
+				tess.setColorRGBA_F(red, green, blue, 0);
+				tess.addVertex(3, -1, -1);
+				tess.addVertex(3, 1, -1);
+				tess.draw();
+
+				tess.startDrawing(4);
+				tess.setColorRGBA_F(red, green, blue, 0);
+				tess.addVertex(3, -1, 1);
+				tess.setColorRGBA_F(red, green, blue, 1);
+				tess.addVertex(6, 0, 0);
+				tess.setColorRGBA_F(red, green, blue, 0);
+				tess.addVertex(3, 1, 1);
+				tess.draw();
+
+				tess.startDrawing(4);
+				tess.setColorRGBA_F(red, green, blue, 0);
+				tess.addVertex(3, -1, -1);
+				tess.setColorRGBA_F(red, green, blue, 1);
+				tess.addVertex(6, 0, 0);
+				tess.setColorRGBA_F(red, green, blue, 0);
+				tess.addVertex(3, -1, 1);
+				tess.draw();
+
+				tess.startDrawing(4);
+				tess.setColorRGBA_F(red, green, blue, 1);
+				tess.addVertex(6, 0, 0);
+				tess.setColorRGBA_F(red, green, blue, 0);
+				tess.addVertex(3, 1, -1);
+				tess.setColorRGBA_F(red, green, blue, 0);
+				tess.addVertex(3, 1, 1);
+				tess.draw();
+				
+				tess.startDrawing(4);
+				tess.setColorRGBA_F(red, green, blue, 1);
+				tess.addVertex(6, 0, 0);
+				tess.addVertex(4, -0.5, -0.5);
+				tess.addVertex(4, 0.5, -0.5);
+				tess.draw();
+
+				tess.startDrawing(4);
+				tess.setColorRGBA_F(red, green, blue, 1);
+				tess.addVertex(4, -0.5, 0.5);
+				tess.addVertex(6, 0, 0);
+				tess.addVertex(4, 0.5, 0.5);
+				tess.draw();
+
+				tess.startDrawing(4);
+				tess.setColorRGBA_F(red, green, blue, 1);
+				tess.addVertex(4, -0.5, -0.5);
+				tess.addVertex(6, 0, 0);
+				tess.addVertex(4, -0.5, 0.5);
+				tess.draw();
+
+				tess.startDrawing(4);
+				tess.setColorRGBA_F(red, green, blue, 1);
+				tess.addVertex(6, 0, 0);
+				tess.addVertex(4, 0.5, -0.5);
+				tess.addVertex(4, 0.5, 0.5);
+				tess.draw();
+				
+				tess.startDrawingQuads();
+				tess.setColorRGBA_F(red, green, blue, 1);
+				tess.addVertex(4, 0.5, -0.5);
+				tess.addVertex(4, 0.5, 0.5);
+				tess.setColorRGBA_F(red, green, blue, 0);
+				tess.addVertex(0, 0.5, 0.5);
+				tess.addVertex(0, 0.5, -0.5);
+				tess.draw();
+
+				tess.startDrawingQuads();
+				tess.setColorRGBA_F(red, green, blue, 1);
+				tess.addVertex(4, -0.5, -0.5);
+				tess.addVertex(4, -0.5, 0.5);
+				tess.setColorRGBA_F(red, green, blue, 0);
+				tess.addVertex(0, -0.5, 0.5);
+				tess.addVertex(0, -0.5, -0.5);
+				tess.draw();
+
+				tess.startDrawingQuads();
+				tess.setColorRGBA_F(red, green, blue, 1);
+				tess.addVertex(4, -0.5, 0.5);
+				tess.addVertex(4, 0.5, 0.5);
+				tess.setColorRGBA_F(red, green, blue, 0);
+				tess.addVertex(0, 0.5, 0.5);
+				tess.addVertex(0, -0.5, 0.5);
+				tess.draw();
+
+				tess.startDrawingQuads();
+				tess.setColorRGBA_F(red, green, blue, 1);
+				tess.addVertex(4, -0.5, -0.5);
+				tess.addVertex(4, 0.5, -0.5);
+				tess.setColorRGBA_F(red, green, blue, 0);
+				tess.addVertex(0, 0.5, -0.5);
+				tess.addVertex(0, -0.5, -0.5);
+				tess.draw();
+			}
+			
+			GL11.glEnable(GL11.GL_TEXTURE_2D);
+			GL11.glDisable(GL11.GL_BLEND);
+			GL11.glEnable(GL11.GL_LIGHTING);
+			GL11.glEnable(GL11.GL_CULL_FACE);
+			GL11.glDepthMask(true);
+			GL11.glPopMatrix();
+		};
+		energy_pppop.setRenderer(pppopRenderer);
+		energy_pppop_steel.setRenderer(pppopRenderer);
+		
 		setRendererBulk(LegoClient.RENDER_AP_BULLET, coil_tungsten, coil_ferrouranium);
 		
 		folly_sm.setRendererBeam(LegoClient.RENDER_FOLLY);
@@ -302,6 +660,7 @@ public class GunFactoryClient {
 		((ItemGunBaseNT) ModItems.gun_tau)							.getConfig(null, 0).hud(LegoClient.HUD_COMPONENT_DURABILITY, LegoClient.HUD_COMPONENT_AMMO);
 		((ItemGunBaseNT) ModItems.gun_fatman)						.getConfig(null, 0).hud(LegoClient.HUD_COMPONENT_DURABILITY, LegoClient.HUD_COMPONENT_AMMO);
 		((ItemGunBaseNT) ModItems.gun_lasrifle)						.getConfig(null, 0).hud(LegoClient.HUD_COMPONENT_DURABILITY, LegoClient.HUD_COMPONENT_AMMO);
+		((ItemGunBaseNT) ModItems.gun_pppop)						.getConfig(null, 0).hud(LegoClient.HUD_COMPONENT_DURABILITY, LegoClient.HUD_COMPONENT_AMMO);
 		((ItemGunBaseNT) ModItems.gun_coilgun)						.getConfig(null, 0).hud(LegoClient.HUD_COMPONENT_DURABILITY, LegoClient.HUD_COMPONENT_AMMO);
 		((ItemGunBaseNT) ModItems.gun_hangman)						.getConfig(null, 0).hud(LegoClient.HUD_COMPONENT_DURABILITY, LegoClient.HUD_COMPONENT_AMMO);
 		((ItemGunBaseNT) ModItems.gun_mas36)						.getConfig(null, 0).hud(LegoClient.HUD_COMPONENT_DURABILITY, LegoClient.HUD_COMPONENT_AMMO);

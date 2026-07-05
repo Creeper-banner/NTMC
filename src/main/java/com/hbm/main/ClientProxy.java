@@ -68,6 +68,7 @@ import com.hbm.render.item.ItemRenderMissileGeneric.RenderMissileType;
 import com.hbm.render.item.block.ItemRenderBlock;
 import com.hbm.render.item.block.ItemRenderDecoBlock;
 import com.hbm.render.item.weapon.*;
+import com.hbm.render.item.weapon.sedna.ItemRenderPPPOP;
 import com.hbm.render.loader.HFRModelReloader;
 import com.hbm.render.loader.HmfModelLoader;
 import com.hbm.render.model.ModelDepthSquid;
@@ -563,6 +564,8 @@ public class ClientProxy extends ServerProxy {
 		MinecraftForgeClient.registerItemRenderer(ModItems.schrabidium_sword, new ItemRenderTransformer(rtp, ttp_high, stp, rfp, tfp, sfp, rir, tir, sir));
 		MinecraftForgeClient.registerItemRenderer(ModItems.cmb_sword, new ItemRenderTransformer(rtp, ttp_high, stp, rfp, tfp, sfp, rir, tir, sir));
 		MinecraftForgeClient.registerItemRenderer(ModItems.dnt_sword, new ItemRenderTransformer(rtp, ttp_high, stp, rfp, tfp, sfp, rir, tir, sir));
+
+		MinecraftForgeClient.registerItemRenderer(ModItems.gun_pppop, new ItemRenderPPPOP());
 
 		double[] sfp_default = new double[] {1, 1, 1};
 		double[] tfp_default = new double[] {0, 0, 0};

@@ -1622,6 +1622,7 @@ public class ModItems {
 	public static Item gun_minigun_lacunae;
 	public static Item gun_missile_launcher;
 	public static Item gun_tesla_cannon;
+	public static Item gun_pppop;
 	public static Item gun_laser_pistol;
 	public static Item gun_laser_pistol_pew_pew;
 	public static Item gun_laser_pistol_morning_glory;
@@ -6514,6 +6515,7 @@ public class ModItems {
 		GameRegistry.registerItem(gun_minigun_lacunae, gun_minigun_lacunae.getUnlocalizedName());
 		GameRegistry.registerItem(gun_missile_launcher, gun_missile_launcher.getUnlocalizedName());
 		GameRegistry.registerItem(gun_tesla_cannon, gun_tesla_cannon.getUnlocalizedName());
+		GameRegistry.registerItem(gun_pppop, gun_pppop.getUnlocalizedName());
 		GameRegistry.registerItem(gun_laser_pistol, gun_laser_pistol.getUnlocalizedName());
 		GameRegistry.registerItem(gun_laser_pistol_pew_pew, gun_laser_pistol_pew_pew.getUnlocalizedName());
 		GameRegistry.registerItem(gun_laser_pistol_morning_glory, gun_laser_pistol_morning_glory.getUnlocalizedName());
