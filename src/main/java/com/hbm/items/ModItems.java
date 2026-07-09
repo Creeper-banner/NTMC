@@ -28,8 +28,6 @@ import com.hbm.items.machine.ItemRBMKRod.EnumDepleteFunc;
 import com.hbm.items.machine.ItemRTGPelletDepleted.DepletedRTGMaterial;
 import com.hbm.items.machine.ItemStamp.StampType;
 import com.hbm.items.special.*;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import com.hbm.items.special.ItemPlasticScrap.ScrapType;
 import com.hbm.items.tool.*;
 import com.hbm.items.tool.ItemToolAbility.EnumToolType;
@@ -904,10 +902,6 @@ public class ModItems {
 	public static Item ams_catalyst_tungsten;
 
 	public static Item ams_lens;
-	public static Item ams_focus_blank;
-	public static Item ams_focus_limiter;
-	public static Item ams_focus_booster;
-	public static Item ams_muzzle;
 
 	public static Item ams_core_sing;
 	public static Item ams_core_wormhole;
@@ -1628,7 +1622,6 @@ public class ModItems {
 	public static Item gun_minigun_lacunae;
 	public static Item gun_missile_launcher;
 	public static Item gun_tesla_cannon;
-	public static Item gun_pppop;
 	public static Item gun_laser_pistol;
 	public static Item gun_laser_pistol_pew_pew;
 	public static Item gun_laser_pistol_morning_glory;
@@ -1808,7 +1801,6 @@ public class ModItems {
 	public static Item upgrade_overdrive_1;
 	public static Item upgrade_overdrive_2;
 	public static Item upgrade_overdrive_3;
-	public static Item upgrade_ultimate;
 	public static Item upgrade_radius;
 	public static Item upgrade_health;
 	public static Item upgrade_smelter;
@@ -2259,8 +2251,6 @@ public class ModItems {
 	public static Item bucket_mercury;
 	public static Item bucket_bromine;
 	public static Item bucket_ccl;
-	public static Item bucket_qgp;
-	public static Item qgp_mining_bomb;
 
 	public static Item door_metal;
 	public static Item door_office;
@@ -4239,10 +4229,6 @@ public class ModItems {
 		arc_electrode_burnt = new ItemArcElectrodeBurnt().setUnlocalizedName("arc_electrode_burnt").setCreativeTab(MainRegistry.controlTab).setTextureName(RefStrings.MODID + ":arc_electrode_burnt");
 
 		ams_lens = new ItemLens(60 * 60 * 60 * 20 * 100).setUnlocalizedName("ams_lens").setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab).setTextureName(RefStrings.MODID + ":ams_lens");
-		ams_focus_blank = new Item().setUnlocalizedName("ams_focus_blank").setMaxStackSize(16).setCreativeTab(MainRegistry.controlTab).setTextureName(RefStrings.MODID + ":ams_focus_blank");
-		ams_focus_limiter = new Item().setUnlocalizedName("ams_focus_limiter").setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab).setTextureName(RefStrings.MODID + ":ams_focus_limiter");
-		ams_focus_booster = new Item().setUnlocalizedName("ams_focus_booster").setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab).setTextureName(RefStrings.MODID + ":ams_focus_booster");
-		ams_muzzle = new Item().setUnlocalizedName("ams_muzzle").setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab).setTextureName(RefStrings.MODID + ":ams_muzzle");
 		ams_core_sing = new ItemAMSCore(1000000000L, 200, 10).setUnlocalizedName("ams_core_sing").setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab).setTextureName(RefStrings.MODID + ":ams_core_sing");
 		ams_core_wormhole = new ItemAMSCore(1500000000L, 200, 15).setUnlocalizedName("ams_core_wormhole").setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab).setTextureName(RefStrings.MODID + ":ams_core_wormhole");
 		ams_core_eyeofharmony = new ItemAMSCore(2500000000L, 300, 10).setUnlocalizedName("ams_core_eyeofharmony").setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab).setTextureName(RefStrings.MODID + ":ams_core_eyeofharmony");
@@ -4274,7 +4260,6 @@ public class ModItems {
 		upgrade_overdrive_1 = new ItemMachineUpgrade(UpgradeType.OVERDRIVE, 1).setUnlocalizedName("upgrade_overdrive_1").setCreativeTab(MainRegistry.controlTab).setTextureName(RefStrings.MODID + ":upgrade_overdrive_1");
 		upgrade_overdrive_2 = new ItemMachineUpgrade(UpgradeType.OVERDRIVE, 2).setUnlocalizedName("upgrade_overdrive_2").setCreativeTab(MainRegistry.controlTab).setTextureName(RefStrings.MODID + ":upgrade_overdrive_2");
 		upgrade_overdrive_3 = new ItemMachineUpgrade(UpgradeType.OVERDRIVE, 3).setUnlocalizedName("upgrade_overdrive_3").setCreativeTab(MainRegistry.controlTab).setTextureName(RefStrings.MODID + ":upgrade_overdrive_3");
-		upgrade_ultimate = new ItemMachineUpgrade(UpgradeType.OVERDRIVE, 2).setUnlocalizedName("upgrade_ultimate").setCreativeTab(MainRegistry.controlTab).setTextureName(RefStrings.MODID + ":upgrade_overdrive_3");
 		upgrade_radius = new ItemMachineUpgrade().setUnlocalizedName("upgrade_radius").setMaxStackSize(16).setCreativeTab(MainRegistry.controlTab).setTextureName(RefStrings.MODID + ":upgrade_radius");
 		upgrade_health = new ItemMachineUpgrade().setUnlocalizedName("upgrade_health").setMaxStackSize(16).setCreativeTab(MainRegistry.controlTab).setTextureName(RefStrings.MODID + ":upgrade_health");
 		upgrade_smelter = new ItemMachineUpgrade().setUnlocalizedName("upgrade_smelter").setCreativeTab(MainRegistry.controlTab).setTextureName(RefStrings.MODID + ":upgrade_smelter");
@@ -4895,8 +4880,6 @@ public class ModItems {
 		bucket_mercury = new ItemModBucket(ModBlocks.mercury_block).setUnlocalizedName("bucket_mercury").setContainerItem(Items.bucket).setCreativeTab(MainRegistry.blockTab).setTextureName(RefStrings.MODID + ":bucket_mercury");
 		bucket_bromine = new ItemModBucket(ModBlocks.bromine_block).setUnlocalizedName("bucket_bromine").setContainerItem(Items.bucket).setCreativeTab(MainRegistry.blockTab).setTextureName(RefStrings.MODID + ":bucket_bromine");
 		bucket_ccl = new ItemModBucket(ModBlocks.ccl_block).setUnlocalizedName("bucket_ccl").setContainerItem(Items.bucket).setCreativeTab(MainRegistry.blockTab).setTextureName(RefStrings.MODID + ":bucket_ccl");
-		bucket_qgp = new ItemQGPBucket(ModBlocks.qgp_block).setUnlocalizedName("bucket_qgp").setContainerItem(Items.bucket).setCreativeTab(MainRegistry.controlTab);
-		qgp_mining_bomb = new ItemQGPMiningBomb(4).setUnlocalizedName("qgp_mining_bomb").setTextureName("tnt_side").setCreativeTab(MainRegistry.weaponTab);
 
 		door_metal = new ItemModDoor().setUnlocalizedName("door_metal").setCreativeTab(MainRegistry.blockTab).setTextureName(RefStrings.MODID + ":door_metal");
 		door_office = new ItemModDoor().setUnlocalizedName("door_office").setCreativeTab(MainRegistry.blockTab).setTextureName(RefStrings.MODID + ":door_office");
@@ -5932,7 +5915,6 @@ public class ModItems {
 		GameRegistry.registerItem(upgrade_overdrive_1, upgrade_overdrive_1.getUnlocalizedName());
 		GameRegistry.registerItem(upgrade_overdrive_2, upgrade_overdrive_2.getUnlocalizedName());
 		GameRegistry.registerItem(upgrade_overdrive_3, upgrade_overdrive_3.getUnlocalizedName());
-		GameRegistry.registerItem(upgrade_ultimate, upgrade_ultimate.getUnlocalizedName());
 		GameRegistry.registerItem(upgrade_radius, upgrade_radius.getUnlocalizedName());
 		GameRegistry.registerItem(upgrade_health, upgrade_health.getUnlocalizedName());
 		GameRegistry.registerItem(upgrade_smelter, upgrade_smelter.getUnlocalizedName());
@@ -6021,10 +6003,6 @@ public class ModItems {
 
 		//AMS Components
 		GameRegistry.registerItem(ams_lens, ams_lens.getUnlocalizedName());
-		GameRegistry.registerItem(ams_focus_blank, ams_focus_blank.getUnlocalizedName());
-		GameRegistry.registerItem(ams_focus_limiter, ams_focus_limiter.getUnlocalizedName());
-		GameRegistry.registerItem(ams_focus_booster, ams_focus_booster.getUnlocalizedName());
-		GameRegistry.registerItem(ams_muzzle, ams_muzzle.getUnlocalizedName());
 		GameRegistry.registerItem(ams_core_sing, ams_core_sing.getUnlocalizedName());
 		GameRegistry.registerItem(ams_core_wormhole, ams_core_wormhole.getUnlocalizedName());
 		GameRegistry.registerItem(ams_core_eyeofharmony, ams_core_eyeofharmony.getUnlocalizedName());
@@ -6536,7 +6514,6 @@ public class ModItems {
 		GameRegistry.registerItem(gun_minigun_lacunae, gun_minigun_lacunae.getUnlocalizedName());
 		GameRegistry.registerItem(gun_missile_launcher, gun_missile_launcher.getUnlocalizedName());
 		GameRegistry.registerItem(gun_tesla_cannon, gun_tesla_cannon.getUnlocalizedName());
-		GameRegistry.registerItem(gun_pppop, gun_pppop.getUnlocalizedName());
 		GameRegistry.registerItem(gun_laser_pistol, gun_laser_pistol.getUnlocalizedName());
 		GameRegistry.registerItem(gun_laser_pistol_pew_pew, gun_laser_pistol_pew_pew.getUnlocalizedName());
 		GameRegistry.registerItem(gun_laser_pistol_morning_glory, gun_laser_pistol_morning_glory.getUnlocalizedName());
@@ -7232,8 +7209,6 @@ public class ModItems {
 		GameRegistry.registerItem(bucket_mercury, bucket_mercury.getUnlocalizedName());
 		GameRegistry.registerItem(bucket_bromine, bucket_bromine.getUnlocalizedName());
 		GameRegistry.registerItem(bucket_ccl, bucket_ccl.getUnlocalizedName());
-		GameRegistry.registerItem(bucket_qgp, bucket_qgp.getUnlocalizedName());
-		GameRegistry.registerItem(qgp_mining_bomb, qgp_mining_bomb.getUnlocalizedName());
 
 		//Door Items
 		GameRegistry.registerItem(door_metal, door_metal.getUnlocalizedName());

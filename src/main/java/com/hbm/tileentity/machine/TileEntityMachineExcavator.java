@@ -114,11 +114,6 @@ public class TileEntityMachineExcavator extends TileEntityMachineBase implements
 
 		consumption = baseConsumption * (1 + speedLevel);
 		consumption /= (1 + powerLevel);
-
-		if(upgradeManager.ultimateCount > 0) {
-			consumption = (int) (consumption * Math.pow(0.5D, upgradeManager.ultimateCount));
-		}
-
 		long intendedMaxPower = 1_000_000L * over;
 
 		if(!worldObj.isRemote) {
@@ -148,11 +143,6 @@ public class TileEntityMachineExcavator extends TileEntityMachineBase implements
 
 				this.speed = type.speed;
 				this.speed *= (1 + speedLevel / 2D) * over;
-
-				if(upgradeManager.ultimateCount > 0) {
-					int speedFactor = 1 + upgradeManager.ultimateCount * 4;
-					this.speed = this.speed * speedFactor;
-				}
 
 				int maxDepth = this.yCoord - 4;
 
@@ -192,9 +182,6 @@ public class TileEntityMachineExcavator extends TileEntityMachineBase implements
 
 			if(this.operational) {
 				this.drillRotation += 10F * (speedLevel / 2F + 1);
-				if(upgradeManager.ultimateCount > 0) {
-					this.drillRotation += 10F * (4 * upgradeManager.ultimateCount);
-				}
 
 				if(this.enableCrusher) {
 					this.crusherRotation += 10F;
@@ -354,8 +341,6 @@ public class TileEntityMachineExcavator extends TileEntityMachineBase implements
 			}
 
 			ItemStack stack = ore.resource.copy();
-			int mult = 1 << upgradeManager.ultimateCount;
-			stack.stackSize *= mult;
 			List<ItemStack> stacks = new ArrayList();
 			stacks.add(stack);
 
@@ -653,14 +638,6 @@ public class TileEntityMachineExcavator extends TileEntityMachineBase implements
 		int z = zCoord + dir.offsetZ * 4;
 
 		List<ItemStack> stacks = new ArrayList();
-		int mult = 1 << upgradeManager.ultimateCount;
-		if(mult > 1) {
-			for(EntityItem item : items) {
-				if(!item.isDead && item.getEntityItem() != null && !item.getEntityItem().hasTagCompound()) {
-					item.getEntityItem().stackSize *= mult;
-				}
-			}
-		}
 		items.forEach(i -> { if(!i.isDead) stacks.add(i.getEntityItem());});
 
 		/* try to insert into a valid container */

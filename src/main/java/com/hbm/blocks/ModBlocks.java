@@ -999,10 +999,6 @@ public class ModBlocks {
 
 	public static Block watz;
 	public static Block watz_pump;
-	
-	public static Block ams_base;
-	public static Block ams_emitter;
-	public static Block ams_limiter;
 
 	public static Block watz_element;
 	public static Block watz_cooler;
@@ -1316,9 +1312,6 @@ public class ModBlocks {
 	public static Block schrabidic_block;
 	public static Fluid schrabidic_fluid;
 	public static final Material fluidschrabidic = (new MaterialLiquid(MapColor.cyanColor));
-
-	public static Block qgp_block;
-	public static Fluid qgp_fluid;
 
 	public static Block corium_block;
 	public static Fluid corium_fluid;
@@ -2300,10 +2293,6 @@ public class ModBlocks {
 		watz = new Watz().setBlockName("watz").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab).setBlockTextureName(RefStrings.MODID + ":block_steel");
 		watz_pump = new WatzPump().setBlockName("watz_pump").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab).setBlockTextureName(RefStrings.MODID + ":block_steel");
 
-		ams_base = new BlockAMSBase().setBlockName("ams_base").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab).setBlockTextureName(RefStrings.MODID + ":block_steel");
-		ams_emitter = new BlockAMSEmitter().setBlockName("ams_emitter").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab).setBlockTextureName(RefStrings.MODID + ":block_steel");
-		ams_limiter = new BlockAMSLimiter().setBlockName("ams_limiter").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab).setBlockTextureName(RefStrings.MODID + ":block_steel");
-
 		balefire = new Balefire().setBlockName("balefire").setHardness(0.0F).setLightLevel(1.0F).setCreativeTab(null).setBlockTextureName(RefStrings.MODID + ":balefire");
 		fire_digamma = new DigammaFlame().setBlockName("fire_digamma").setHardness(0.0F).setResistance(150F).setLightLevel(1.0F).setCreativeTab(null).setBlockTextureName(RefStrings.MODID + ":fire_digamma");
 		digamma_matter = new DigammaMatter().setBlockName("digamma_matter").setBlockUnbreakable().setResistance(18000000).setCreativeTab(null).setBlockTextureName(RefStrings.MODID + ":digamma_matter");
@@ -2639,10 +2628,6 @@ public class ModBlocks {
 		schrabidic_fluid = new SchrabidicFluid().setDensity(31200).setViscosity(500).setTemperature(273).setUnlocalizedName("schrabidic_fluid");
 		FluidRegistry.registerFluid(schrabidic_fluid);
 		schrabidic_block = new SchrabidicBlock(schrabidic_fluid, Material.water, ModDamageSource.radiation).setBlockName("schrabidic_block").setResistance(500F);
-
-		qgp_fluid = new QGPFluid().setDensity(10000).setViscosity(200).setLuminosity(15).setTemperature(10000).setUnlocalizedName("qgp_fluid");
-		FluidRegistry.registerFluid(qgp_fluid);
-		qgp_block = new QGPBlock(qgp_fluid, Material.lava).setBlockName("qgp_block").setResistance(10F);
 
 		corium_fluid = new CoriumFluid().setDensity(600000).setViscosity(12000).setLuminosity(10).setTemperature(1500).setUnlocalizedName("corium_fluid");
 		FluidRegistry.registerFluid(corium_fluid);
@@ -3884,9 +3869,6 @@ public class ModBlocks {
 		register(watz_end);
 		register(watz);
 		register(watz_pump);
-		register(ams_base);
-		register(ams_emitter);
-		register(ams_limiter);
 
 		register(machine_icf_press);
 		register(icf_laser_component);
@@ -3966,7 +3948,6 @@ public class ModBlocks {
 		GameRegistry.registerBlock(acid_block, acid_block.getUnlocalizedName());
 		GameRegistry.registerBlock(toxic_block, toxic_block.getUnlocalizedName());
 		GameRegistry.registerBlock(schrabidic_block, schrabidic_block.getUnlocalizedName());
-		GameRegistry.registerBlock(qgp_block, qgp_block.getUnlocalizedName());
 		GameRegistry.registerBlock(corium_block, corium_block.getUnlocalizedName());
 		GameRegistry.registerBlock(volcanic_lava_block, volcanic_lava_block.getUnlocalizedName());
 		GameRegistry.registerBlock(rad_lava_block, rad_lava_block.getUnlocalizedName());

@@ -103,7 +103,7 @@ public class TileEntityMachineTurbineGas extends TileEntityMachineBase implement
 
 			if(slots[1] != null && slots[1].getItem() instanceof IItemFluidIdentifier) {
 				FluidType fluid = ((IItemFluidIdentifier) slots[1].getItem()).getType(worldObj, xCoord, yCoord, zCoord, slots[1]);
-				if(fluid.hasTrait(FT_Combustible.class) && (fluid.getTrait(FT_Combustible.class).getGrade() == FuelGrade.GAS || fluid.getTrait(FT_Combustible.class).getGrade() == FuelGrade.QGP)) {
+				if(fluid.hasTrait(FT_Combustible.class) && fluid.getTrait(FT_Combustible.class).getGrade() == FuelGrade.GAS) {
 					tanks[0].setTankType(fluid);
 				}
 			}
@@ -199,7 +199,7 @@ public class TileEntityMachineTurbineGas extends TileEntityMachineBase implement
 	}
 
     public boolean setFuelRC(FluidType type) {
-        if(type.hasTrait(FT_Combustible.class) && (type.getTrait(FT_Combustible.class).getGrade() == FuelGrade.GAS || type.getTrait(FT_Combustible.class).getGrade() == FuelGrade.QGP)) {
+        if(type.hasTrait(FT_Combustible.class) && type.getTrait(FT_Combustible.class).getGrade() == FuelGrade.GAS) {
             tanks[0].setTankType(type);
             return true;
         }
@@ -264,8 +264,7 @@ public class TileEntityMachineTurbineGas extends TileEntityMachineBase implement
 	public boolean hasAcceptableFuel() {
 
 		if(tanks[0].getTankType().hasTrait(FT_Combustible.class)) {
-			FuelGrade g = tanks[0].getTankType().getTrait(FT_Combustible.class).getGrade();
-			return g == FuelGrade.GAS || g == FuelGrade.QGP;
+			return tanks[0].getTankType().getTrait(FT_Combustible.class).getGrade() == FuelGrade.GAS;
 		}
 
 		return false;
@@ -404,11 +403,7 @@ public class TileEntityMachineTurbineGas extends TileEntityMachineBase implement
 		long energy = 0; //energy per mb of fuel
 
 		if(tanks[0].getTankType().hasTrait(FT_Combustible.class)) {
-			FT_Combustible comb = tanks[0].getTankType().getTrait(FT_Combustible.class);
-			energy = comb.getCombustionEnergy() / 1000L;
-			if(comb.getGrade() == FuelGrade.QGP) {
-				energy *= 3;
-			}
+			energy = tanks[0].getTankType().getTrait(FT_Combustible.class).getCombustionEnergy() / 1000L;
 		}
 
 		int rpmEff = rpm - rpmIdle; // RPM above idle level, 0-90

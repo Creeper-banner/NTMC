@@ -27,14 +27,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 
-import com.hbm.render.shader.Shader;
-import net.minecraft.util.ResourceLocation;
-import com.hbm.lib.RefStrings;
-
 public class FluidTank implements Cloneable {
-	
-	@SideOnly(Side.CLIENT)
-	private static Shader qgpShader;
 	
 	public static final FluidTank[] EMPTY_ARRAY = new FluidTank[0];
 
@@ -230,15 +223,6 @@ public class FluidTank implements Cloneable {
 			maxU = 1D - i / 16D;
 		}
 		
-		boolean isQGP = type == Fluids.QGP;
-		if(isQGP) {
-			if(qgpShader == null) {
-				qgpShader = new Shader(new ResourceLocation(RefStrings.MODID, "shaders/qgp.vert"), new ResourceLocation(RefStrings.MODID, "shaders/qgp.frag"));
-			}
-			qgpShader.use();
-			qgpShader.setUniform1f("iTime", (System.currentTimeMillis() % 100000) / 1000.0F);
-		}
-
 		Tessellator tessellator = Tessellator.instance;
 		tessellator.startDrawingQuads();
 		tessellator.addVertexWithUV(minX, maxY, z, minU, maxV);
@@ -246,10 +230,6 @@ public class FluidTank implements Cloneable {
 		tessellator.addVertexWithUV(maxX, minY, z, maxU, minV);
 		tessellator.addVertexWithUV(minX, minY, z, minU, minV);
 		tessellator.draw();
-
-		if(isQGP) {
-			qgpShader.stop();
-		}
 
 		GL11.glColor3d(1D, 1D, 1D);
 		GL11.glDisable(GL11.GL_BLEND);

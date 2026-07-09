@@ -333,7 +333,6 @@ public class CraftingManager {
 		addShapelessAuto(new ItemStack(ModItems.detonator_laser, 1), new Object[] { ModItems.rangefinder, DictFrame.fromOne(ModItems.circuit, EnumCircuitType.ADVANCED), RUBBER.ingot(), GOLD.wireDense() });
 		addShapelessAuto(new ItemStack(ModItems.detonator_deadman, 1), new Object[] { ModItems.detonator, ModItems.defuser, ModItems.ducttape });
 		addRecipeAuto(new ItemStack(ModItems.detonator_de, 1), new Object[] { "T", "D", "T", 'T', Blocks.tnt, 'D', ModItems.detonator_deadman });
-		addRecipeAuto(new ItemStack(ModItems.qgp_mining_bomb, 1), new Object[] { "TTT", "TQT", "TTT", 'T', Blocks.tnt, 'Q', ModItems.bucket_qgp });
 
 		addRecipeAuto(new ItemStack(ModItems.singularity, 1), new Object[] { "ESE", "SBS", "ESE", 'E', EUPH.nugget(), 'S', ModItems.cell_anti_schrabidium, 'B', SA326.block() });
 		addRecipeAuto(new ItemStack(ModItems.singularity_counter_resonant, 1), new Object[] { "CTC", "TST", "CTC", 'C', CMB.plate(), 'T', MAGTUNG.ingot(), 'S', ModItems.singularity });
@@ -712,11 +711,6 @@ public class CraftingManager {
 		addShapelessAuto(new ItemStack(ModItems.rune_jera, 1), new Object[] { ModItems.rune_blank, ModItems.powder_spark_mix, ModItems.singularity_spark });
 		addShapelessAuto(new ItemStack(ModItems.rune_thurisaz, 1), new Object[] { ModItems.rune_blank, ModItems.powder_spark_mix, ModItems.black_hole });
 		addRecipeAuto(new ItemStack(ModItems.ams_lens, 1), new Object[] { "PDP", "GDG", "PDP", 'P', ModItems.plate_dineutronium, 'G', ModBlocks.reinforced_glass, 'D', Blocks.diamond_block });
-		addRecipeAuto(new ItemStack(ModItems.ams_focus_blank, 1), new Object[] { " P ", "PGP", " P ", 'P', ModItems.plate_dineutronium, 'G', Blocks.obsidian });
-		addShapelessAuto(new ItemStack(ModItems.ams_focus_limiter, 1), new Object[] { ModItems.ams_focus_blank, ModItems.rune_isa, Blocks.diamond_block });
-		addShapelessAuto(new ItemStack(ModItems.ams_focus_booster, 1), new Object[] { ModItems.ams_focus_blank, ModItems.rune_hagalaz, Blocks.emerald_block });
-		addRecipeAuto(new ItemStack(ModItems.ams_muzzle, 1), new Object[] { "PPP", " P ", " P ", 'P', ModItems.plate_schrabidium });
-
 		addRecipeAuto(new ItemStack(ModItems.ams_catalyst_blank, 1), new Object[] { "TET", "ETE", "TET", 'T', TS.dust(), 'E', EUPH.ingot()});
 		addShapelessAuto(new ItemStack(ModItems.ams_catalyst_lithium, 1), new Object[] { ModItems.ams_catalyst_blank, ModItems.rune_isa, ModItems.rune_isa, ModItems.rune_jera, ModItems.rune_jera, LI.dust(), LI.dust(), LI.dust(), LI.dust() });
 		addShapelessAuto(new ItemStack(ModItems.ams_catalyst_beryllium, 1), new Object[] { ModItems.ams_catalyst_blank, ModItems.rune_isa, ModItems.rune_dagaz, ModItems.rune_jera, ModItems.rune_jera, BE.dust(), BE.dust(), BE.dust(), BE.dust() });

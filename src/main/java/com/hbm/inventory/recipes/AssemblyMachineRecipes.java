@@ -260,29 +260,6 @@ public class AssemblyMachineRecipes extends GenericRecipes<GenericRecipe> {
 				.inputItems(new ComparableStack(ModItems.cap_korl, 64), new ComparableStack(ModItems.cap_korl, 64)));
 
 		// machines
-		// AMS Base, Emitter and Limiter recipes (DFC-tier late-game recipes)
-		this.register(new GenericRecipe("ass.ams_base").setup(1200, 5000).outputItems(new ItemStack(ModBlocks.ams_base, 1))
-				.inputItems(
-						new OreDictStack(OSMIRIDIUM.plateWelded(), 8),
-						new OreDictStack(DNT.wireDense(), 8),
-						new ComparableStack(ModItems.coil_gold_torus, 4),
-						new ComparableStack(ModItems.circuit, 4, EnumCircuitType.CONTROLLER_QUANTUM),
-						new ComparableStack(ModItems.singularity_spark, 1)));
-		this.register(new GenericRecipe("ass.ams_emitter").setup(1000, 5000).outputItems(new ItemStack(ModBlocks.ams_emitter, 1))
-				.inputItems(
-						new OreDictStack(OSMIRIDIUM.plateWelded(), 4),
-						new OreDictStack(STAR.wireDense(), 4),
-						new ComparableStack(ModItems.coil_gold_torus, 2),
-						new ComparableStack(ModItems.circuit, 2, EnumCircuitType.CONTROLLER_QUANTUM),
-						new ComparableStack(ModItems.singularity_spark, 1)));
-		this.register(new GenericRecipe("ass.ams_limiter").setup(800, 5000).outputItems(new ItemStack(ModBlocks.ams_limiter, 1))
-				.inputItems(
-						new OreDictStack(OSMIRIDIUM.plateWelded(), 4),
-						new OreDictStack(SBD.wireDense(), 4),
-						new ComparableStack(ModItems.coil_copper_torus, 2),
-						new ComparableStack(ModItems.circuit, 2, EnumCircuitType.CONTROLLER_QUANTUM),
-						new ComparableStack(ModItems.singularity_spark, 1)));
-
 		this.register(new GenericRecipe("ass.shredder").setup(100, 100).outputItems(new ItemStack(ModBlocks.machine_shredder, 1))
 				.inputItems(new OreDictStack(STEEL.plate(), 8), new OreDictStack(CU.plate(), 4), new ComparableStack(ModItems.motor, 2))
 				.inputItemsEx(new ComparableStack(ModItems.item_expensive, 1, EnumExpensiveType.STEEL_PLATING), new OreDictStack(CU.plate(), 4), new ComparableStack(ModItems.motor, 2)));

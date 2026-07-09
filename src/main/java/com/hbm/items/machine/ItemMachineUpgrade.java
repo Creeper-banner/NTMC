@@ -15,7 +15,6 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
 
 public class ItemMachineUpgrade extends Item {
 	
@@ -107,10 +106,6 @@ public class ItemMachineUpgrade extends Item {
 			list.add(EnumChatFormatting.RED + "Gas Centrifuge Upgrade");
 			list.add("Allows for total isotopic separation of HEUF6");
 			list.add(EnumChatFormatting.YELLOW + "also your centrifuge goes sicko mode");
-		}
-		
-		if(this == ModItems.upgrade_ultimate) {
-			list.add(StatCollector.translateToLocal("desc.item.upgrade_ultimate"));
 		}
 	}
 	

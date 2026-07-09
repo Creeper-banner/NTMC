@@ -148,15 +148,7 @@ public class TileEntityElectrolyser extends TileEntityMachineBase implements IEn
             this.processOreTime = this.processOreTime * ((4 - speedLevel) / 4);
             this.processFluidTime = this.processFluidTime * ((4 - speedLevel) / 4);
 
-			int count = ItemMachineUpgrade.OverdriveSpeeds[overLevel];
-			if(upgradeManager.ultimateCount > 0) {
-				usageOre = (int)(usageOre * Math.pow(0.5D, upgradeManager.ultimateCount));
-				usageFluid = (int)(usageFluid * Math.pow(0.5D, upgradeManager.ultimateCount));
-				this.updateDuration();
-				count = count == 1 ? (1 + upgradeManager.ultimateCount * 4) : (count + upgradeManager.ultimateCount * 4);
-			}
-
-            for(int i = 0; i < count; i++) {
+            for(int i = 0; i < ItemMachineUpgrade.OverdriveSpeeds[overLevel]; i++) {
                 if (this.canProcessFluid()) {
                     this.progressFluid++;
                     this.power -= this.usageFluid;
@@ -298,9 +290,8 @@ public class TileEntityElectrolyser extends TileEntityMachineBase implements IEn
 
 		if(recipe == null) return false;
 		if(recipe.amount > tanks[0].getFill()) return false;
-		int mult = 1 << upgradeManager.ultimateCount;
-		if(recipe.output1.type == tanks[1].getTankType() && recipe.output1.fill * mult + tanks[1].getFill() > tanks[1].getMaxFill()) return false;
-		if(recipe.output2.type == tanks[2].getTankType() && recipe.output2.fill * mult + tanks[2].getFill() > tanks[2].getMaxFill()) return false;
+		if(recipe.output1.type == tanks[1].getTankType() && recipe.output1.fill + tanks[1].getFill() > tanks[1].getMaxFill()) return false;
+		if(recipe.output2.type == tanks[2].getTankType() && recipe.output2.fill + tanks[2].getFill() > tanks[2].getMaxFill()) return false;
 
 		if(recipe.byproduct != null) {
 
@@ -310,7 +301,7 @@ public class TileEntityElectrolyser extends TileEntityMachineBase implements IEn
 
 				if(slot == null) continue;
 				if(!slot.isItemEqual(byproduct)) return false;
-				if(slot.stackSize + byproduct.stackSize * mult > slot.getMaxStackSize()) return false;
+				if(slot.stackSize + byproduct.stackSize > slot.getMaxStackSize()) return false;
 			}
 		}
 
@@ -323,19 +314,17 @@ public class TileEntityElectrolyser extends TileEntityMachineBase implements IEn
 		tanks[0].setFill(tanks[0].getFill() - recipe.amount);
 		tanks[1].setTankType(recipe.output1.type);
 		tanks[2].setTankType(recipe.output2.type);
-		int mult = 1 << upgradeManager.ultimateCount;
-		tanks[1].setFill(tanks[1].getFill() + recipe.output1.fill * mult);
-		tanks[2].setFill(tanks[2].getFill() + recipe.output2.fill * mult);
+		tanks[1].setFill(tanks[1].getFill() + recipe.output1.fill);
+		tanks[2].setFill(tanks[2].getFill() + recipe.output2.fill);
 
 		if(recipe.byproduct != null) {
 
 			for(int i = 0; i < recipe.byproduct.length; i++) {
 				ItemStack slot = slots[11 + i];
-				ItemStack byproduct = recipe.byproduct[i].copy();
-				byproduct.stackSize *= mult;
+				ItemStack byproduct = recipe.byproduct[i];
 
 				if(slot == null) {
-					slots[11 + i] = byproduct;
+					slots[11 + i] = byproduct.copy();
 				} else {
 					slots[11 + i].stackSize += byproduct.stackSize;
 				}
@@ -352,15 +341,14 @@ public class TileEntityElectrolyser extends TileEntityMachineBase implements IEn
 		ElectrolysisMetalRecipe recipe = ElectrolyserMetalRecipes.getRecipe(slots[14]);
 		if(recipe == null) return false;
 
-		int mult = 1 << upgradeManager.ultimateCount;
 		if(leftStack != null && recipe.output1 != null) {
 			if(recipe.output1.material != leftStack.material) return false;
-			if(recipe.output1.amount * mult + leftStack.amount > this.maxMaterial) return false;
+			if(recipe.output1.amount + leftStack.amount > this.maxMaterial) return false;
 		}
 
 		if(rightStack != null && recipe.output2 != null) {
 			if(recipe.output2.material != rightStack.material) return false;
-			if(recipe.output2.amount * mult + rightStack.amount > this.maxMaterial) return false;
+			if(recipe.output2.amount + rightStack.amount > this.maxMaterial) return false;
 		}
 
 		if(recipe.byproduct != null) {
@@ -371,7 +359,7 @@ public class TileEntityElectrolyser extends TileEntityMachineBase implements IEn
 
 				if(slot == null) continue;
 				if(!slot.isItemEqual(byproduct)) return false;
-				if(slot.stackSize + byproduct.stackSize * mult > slot.getMaxStackSize()) return false;
+				if(slot.stackSize + byproduct.stackSize > slot.getMaxStackSize()) return false;
 			}
 		}
 
@@ -381,30 +369,28 @@ public class TileEntityElectrolyser extends TileEntityMachineBase implements IEn
 	public void processMetal() {
 
 		ElectrolysisMetalRecipe recipe = ElectrolyserMetalRecipes.getRecipe(slots[14]);
-		int mult = 1 << upgradeManager.ultimateCount;
 		if(recipe.output1 != null)
 			if(leftStack == null) {
-				leftStack = new MaterialStack(recipe.output1.material, recipe.output1.amount * mult);
+				leftStack = new MaterialStack(recipe.output1.material, recipe.output1.amount);
 			} else {
-				leftStack.amount += recipe.output1.amount * mult;
+				leftStack.amount += recipe.output1.amount;
 			}
 
 		if(recipe.output2 != null)
 			if(rightStack == null ) {
-				rightStack = new MaterialStack(recipe.output2.material, recipe.output2.amount * mult);
+				rightStack = new MaterialStack(recipe.output2.material, recipe.output2.amount);
 			} else {
-				rightStack.amount += recipe.output2.amount * mult;
+				rightStack.amount += recipe.output2.amount;
 			}
 
 		if(recipe.byproduct != null) {
 
 			for(int i = 0; i < recipe.byproduct.length; i++) {
 				ItemStack slot = slots[15 + i];
-				ItemStack byproduct = recipe.byproduct[i].copy();
-				byproduct.stackSize *= mult;
+				ItemStack byproduct = recipe.byproduct[i];
 
 				if(slot == null) {
-					slots[15 + i] = byproduct;
+					slots[15 + i] = byproduct.copy();
 				} else {
 					slots[15 + i].stackSize += byproduct.stackSize;
 				}

@@ -107,16 +107,9 @@ public class TileEntityMachinePyroOven extends TileEntityMachinePolluting implem
 
 			if(this.canProcess()) {
 				PyroOvenRecipe recipe = getMatchingRecipe();
-				float step = 1F / Math.max((recipe.duration - speed * (recipe.duration / 4)) / ItemMachineUpgrade.OverdriveSpeeds[overdrive], 1);
-				int cost = this.getConsumption(speed + overdrive * 2, powerSaving);
-				if(upgradeManager.ultimateCount > 0) {
-					int speedFactor = 1 + upgradeManager.ultimateCount * 4;
-					step = step * speedFactor;
-					cost = (int) (cost * Math.pow(0.5D, upgradeManager.ultimateCount) * speedFactor);
-				}
-				this.progress += step;
+				this.progress += 1F / Math.max((recipe.duration - speed * (recipe.duration / 4)) / ItemMachineUpgrade.OverdriveSpeeds[overdrive], 1);
 				this.isProgressing = true;
-				this.power -= cost;
+				this.power -= this.getConsumption(speed + overdrive * 2, powerSaving);
 
 				if(progress >= 1F) {
 					this.progress = 0F;
@@ -222,20 +215,14 @@ public class TileEntityMachinePyroOven extends TileEntityMachinePolluting implem
 	public boolean canProcess() {
 		int speed = upgradeManager.getLevel(UpgradeType.SPEED);
 		int powerSaving = upgradeManager.getLevel(UpgradeType.POWER);
-		int cost = this.getConsumption(speed, powerSaving);
-		if(upgradeManager.ultimateCount > 0) {
-			int speedFactor = 1 + upgradeManager.ultimateCount * 4;
-			cost = (int)(cost * Math.pow(0.5D, upgradeManager.ultimateCount) * speedFactor);
-		}
-		if(power < cost) return false; // not enough power
+		if(power < this.getConsumption(speed, powerSaving)) return false; // not enough power
 
 		PyroOvenRecipe recipe = this.getMatchingRecipe();
 		if(recipe == null) return false; // no matching recipe
 		if(recipe.inputFluid != null && tanks[0].getFill() < recipe.inputFluid.fill) return false; // not enough input fluid
 		if(recipe.inputItem != null && slots[1].stackSize < recipe.inputItem.stacksize) return false; // not enough input item
-		int mult = 1 << upgradeManager.ultimateCount;
-		if(recipe.outputFluid != null && recipe.outputFluid.fill * mult + tanks[1].getFill() > tanks[1].getMaxFill() && recipe.outputFluid.type == tanks[1].getTankType()) return false; // too much output fluid
-		if(recipe.outputItem != null && slots[2] != null && recipe.outputItem.stackSize * mult + slots[2].stackSize > slots[2].getMaxStackSize()) return false; // too much output item
+		if(recipe.outputFluid != null && recipe.outputFluid.fill + tanks[1].getFill() > tanks[1].getMaxFill() && recipe.outputFluid.type == tanks[1].getTankType()) return false; // too much output fluid
+		if(recipe.outputItem != null && slots[2] != null && recipe.outputItem.stackSize + slots[2].stackSize > slots[2].getMaxStackSize()) return false; // too much output item
 		if(recipe.outputItem != null && slots[2] != null && recipe.outputItem.getItem() != slots[2].getItem()) return false; // output item doesn't match
 		if(recipe.outputItem != null && slots[2] != null && recipe.outputItem.getItemDamage() != slots[2].getItemDamage()) return false; // output meta doesn't match
 
@@ -243,18 +230,16 @@ public class TileEntityMachinePyroOven extends TileEntityMachinePolluting implem
 	}
 
 	public void finishRecipe(PyroOvenRecipe recipe) {
-		int mult = upgradeManager.hasUltimate ? 2 : 1;
 		if(recipe.outputItem != null) {
 			if(slots[2] == null) {
 				slots[2] = recipe.outputItem.copy();
-				slots[2].stackSize *= mult;
 			} else {
-				slots[2].stackSize += recipe.outputItem.stackSize * mult;
+				slots[2].stackSize += recipe.outputItem.stackSize;
 			}
 		}
 		if(recipe.outputFluid != null) {
 			tanks[1].setTankType(recipe.outputFluid.type);
-			tanks[1].setFill(tanks[1].getFill() + recipe.outputFluid.fill * mult);
+			tanks[1].setFill(tanks[1].getFill() + recipe.outputFluid.fill);
 		}
 		if(recipe.inputItem != null) {
 			this.decrStackSize(1, recipe.inputItem.stacksize);

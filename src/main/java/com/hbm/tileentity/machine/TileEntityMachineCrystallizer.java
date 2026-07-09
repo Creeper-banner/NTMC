@@ -88,11 +88,6 @@ public class TileEntityMachineCrystallizer extends TileEntityMachineBase impleme
             this.duration = (short) ((result != null ? result.duration : 480) * (4 - speedLevel) / 4);
             float freeChance = result == null || effLevel == 0 ? 0 : Math.min(effLevel * result.productivity, 1.01F);
 
-			if(upgradeManager.ultimateCount > 0) {
-				over = over == 1 ? (1 + upgradeManager.ultimateCount * 4) : (over + upgradeManager.ultimateCount * 4);
-				powerReq = (long)(powerReq * Math.pow(0.5D, upgradeManager.ultimateCount));
-			}
-
 			for(int i = 0; i < over; i++) {
 
 				if(canProcess(powerReq)) {
@@ -228,8 +223,6 @@ public class TileEntityMachineCrystallizer extends TileEntityMachineBase impleme
 			return;
 
 		ItemStack stack = result.output.copy();
-		int mult = 1 << upgradeManager.ultimateCount;
-		stack.stackSize *= mult;
 
 		if(slots[2] == null)
 			slots[2] = stack;
@@ -265,13 +258,12 @@ public class TileEntityMachineCrystallizer extends TileEntityMachineBase impleme
 
 		ItemStack stack = result.output.copy();
 
-		int mult = 1 << upgradeManager.ultimateCount;
 		//Does the output not match?
 		if(slots[2] != null && (slots[2].getItem() != stack.getItem() || slots[2].getItemDamage() != stack.getItemDamage()))
 			return false;
 
 		//Or is the output slot already full?
-		if(slots[2] != null && slots[2].stackSize + stack.stackSize * mult > slots[2].getMaxStackSize())
+		if(slots[2] != null && slots[2].stackSize + stack.stackSize > slots[2].getMaxStackSize())
 			return false;
 
 		return true;

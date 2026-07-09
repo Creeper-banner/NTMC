@@ -187,13 +187,11 @@ public abstract class TileEntityOilDrillBase extends TileEntityMachineBase imple
 	}
 
 	public int getPowerReqEff() {
-		if (upgradeManager.hasUltimate) return (int)(this.getPowerReq() * 0.5D * 5);
 		int req = this.getPowerReq();
 		return (req + (req / 4 * this.speedLevel) - (req / 4 * this.energyLevel)) * this.overLevel;
 	}
 
 	public int getDelayEff() {
-		if (upgradeManager.hasUltimate) return Math.max(getDelay() / 5, 1);
 		int delay = getDelay();
 		return Math.max((delay - (delay / 4 * this.speedLevel) + (delay / 10 * this.energyLevel)) / this.overLevel, 1);
 	}
@@ -276,10 +274,9 @@ public abstract class TileEntityOilDrillBase extends TileEntityMachineBase imple
 		tanks[0].setTankType(block.getPrimaryFluid(meta));
 		tanks[1].setTankType(block.getSecondaryFluid(meta));
 
-		int mult = upgradeManager.hasUltimate ? 2 : 1;
-		tanks[0].setFill(Math.min(tanks[0].getFill() + getPrimaryFluidAmount(block, meta) * mult, tanks[0].getMaxFill()));
+		tanks[0].setFill(Math.min(tanks[0].getFill() + getPrimaryFluidAmount(block, meta), tanks[0].getMaxFill()));
 		if(tanks[1].getTankType() != Fluids.NONE)
-			tanks[1].setFill(Math.min(tanks[1].getFill() + getSecondaryFluidAmount(block, meta) * mult, tanks[1].getMaxFill()));
+			tanks[1].setFill(Math.min(tanks[1].getFill() + getSecondaryFluidAmount(block, meta), tanks[1].getMaxFill()));
 
 		attemptDrain(block, x, y, z, meta);
 	}

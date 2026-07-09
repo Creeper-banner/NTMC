@@ -215,7 +215,7 @@ public class ChemicalPlantRecipes extends GenericRecipes<GenericRecipe> {
 				.inputItems(new OreDictStack(COAL.dust(), 2), new OreDictStack(F.dust()))
 				.inputFluids(new FluidStack(Fluids.PETROLEUM, 1_000, GeneralConfig.enable528PressurizedRecipes ? 1 : 0))
 				.outputItems(new ItemStack(ModItems.ingot_polymer, 4)));
-
+		
 		this.register(new GenericRecipe("chem.bakelite").setup(100, 100)
 				.inputFluids(new FluidStack(Fluids.AROMATICS, 500, GeneralConfig.enable528PressurizedRecipes ? 1 : 0), new FluidStack(Fluids.PETROLEUM, 500, GeneralConfig.enable528PressurizedRecipes ? 1 : 0))
 				.outputItems(new ItemStack(ModItems.ingot_bakelite)));
@@ -254,9 +254,9 @@ public class ChemicalPlantRecipes extends GenericRecipes<GenericRecipe> {
 				.outputFluids(new FluidStack(Fluids.ENDERJUICE, 100)));
 
 		this.register(new GenericRecipe("chem.meatprocessing").setupNamed(200, 200).setIcon(ModItems.glyphid_meat)
-				.inputItems(new OreDictStack(KEY_GLYPHID_MEAT, 1))
+				.inputItems(new OreDictStack(KEY_GLYPHID_MEAT, 3))
 				.inputFluids(new FluidStack(Fluids.WATER, 1_000))
-				.outputItems(new ItemStack(ModItems.sulfur, 12), new ItemStack(ModItems.niter, 9), new ItemStack(Items.coal, 6))
+				.outputItems(new ItemStack(ModItems.sulfur, 4), new ItemStack(ModItems.niter, 3))
 				.outputFluids(new FluidStack(Fluids.SALIENT, 250)));
 
 		this.register(new GenericRecipe("chem.rustysteel").setup(40, 100)
@@ -362,7 +362,7 @@ public class ChemicalPlantRecipes extends GenericRecipes<GenericRecipe> {
 				.inputItems(new ComparableStack(ModItems.canister_empty))
 				.inputFluids(new FluidStack(Fluids.GASOLINE, 100), new FluidStack(Fluids.AROMATICS, 50)) // aromatics to emulate polystyrene
 				.outputItems(new ItemStack(ModItems.canister_napalm, 1)));
-
+		
 		/// GLASS ///
 		this.register(new GenericRecipe("chem.laminate").setup(20, 100)
 				.inputFluids(new FluidStack(Fluids.XYLENE, 50), new FluidStack(Fluids.PHOSGENE, 50))
@@ -636,27 +636,6 @@ public class ChemicalPlantRecipes extends GenericRecipes<GenericRecipe> {
                 .inputFluids(new FluidStack(Fluids.SYNGAS, 2000))
                 .outputItems(new ItemStack(ModItems.ingot_tungsten_carbide))
                 .outputFluids(new FluidStack(Fluids.SPENTSTEAM, 1_000)));
-		this.register(new GenericRecipe("chem.ams_base").setup(200, 5000)
-				.inputItems(new ComparableStack(ModItems.gun_pppop, 1), new ComparableStack(ModItems.gun_pppop, 1), new ComparableStack(ModItems.glyphid_meat, 16), new ComparableStack(ModItems.singularity_spark, 1))
-				.inputFluids(new FluidStack(Fluids.PEROXIDE, 4000), new FluidStack(Fluids.ESTRADIOL, 4000))
-				.outputItems(new ItemStack(ModBlocks.ams_base, 1)));
-
-		this.register(new GenericRecipe("chem.ams_emitter").setup(150, 4000)
-				.inputItems(new ComparableStack(ModItems.gun_pppop, 1), new ComparableStack(ModItems.glyphid_meat, 8))
-				.inputFluids(new FluidStack(Fluids.PEROXIDE, 2000), new FluidStack(Fluids.ESTRADIOL, 2000))
-				.outputItems(new ItemStack(ModBlocks.ams_emitter, 1)));
-
-		this.register(new GenericRecipe("chem.ams_limiter").setup(120, 3000)
-				.inputItems(new ComparableStack(ModItems.gun_pppop, 1), new ComparableStack(ModItems.glyphid_meat, 4))
-				.inputFluids(new FluidStack(Fluids.PEROXIDE, 2000), new FluidStack(Fluids.ESTRADIOL, 2000))
-				.outputItems(new ItemStack(ModBlocks.ams_limiter, 1)));
-
-		this.register(new GenericRecipe("chem.upgrade_ultimate").setup(400, 1000)
-				.inputItems(new ComparableStack(ModItems.upgrade_overdrive_3, 1),
-						new ComparableStack(ModItems.upgrade_speed_3, 1),
-						new ComparableStack(ModItems.upgrade_effect_3, 1))
-				.inputFluids(new FluidStack(Fluids.QGP, 10000))
-				.outputItems(new ItemStack(ModItems.upgrade_ultimate, 1)));
 	}
 
 	public static HashMap getRecipes() {

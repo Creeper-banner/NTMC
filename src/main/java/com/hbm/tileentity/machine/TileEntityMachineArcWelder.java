@@ -99,14 +99,6 @@ public class TileEntityMachineArcWelder extends TileEntityMachineBase implements
 				this.processTime = recipe.duration * (4 - redLevel) / 4 / black;
 				this.consumption = recipe.consumption * (4 - blueLevel) / 4 * (redLevel + 1) * black;
 				intendedMaxPower = recipe.consumption * 20 * black;
-
-				if(upgradeManager.ultimateCount > 0) {
-					int speedFactor = 1 + upgradeManager.ultimateCount * 4;
-					double powerFactor = Math.pow(0.5D, upgradeManager.ultimateCount);
-					this.processTime = Math.max(this.processTime / speedFactor, 1);
-					this.consumption = (long)(this.consumption * powerFactor * speedFactor);
-					intendedMaxPower = intendedMaxPower * speedFactor;
-				}
                 
 				if(canProcess(recipe)) {
 					this.progress ++;
@@ -116,12 +108,10 @@ public class TileEntityMachineArcWelder extends TileEntityMachineBase implements
 						this.progress = 0;
 						this.consumeItems(recipe);
 
-						int mult = 1 << upgradeManager.ultimateCount;
 						if(slots[3] == null) {
 							slots[3] = recipe.output.copy();
-							slots[3].stackSize *= mult;
 						} else {
-							slots[3].stackSize += recipe.output.stackSize * mult;
+							slots[3].stackSize += recipe.output.stackSize;
 						}
 
 						this.markDirty();
@@ -198,11 +188,10 @@ public class TileEntityMachineArcWelder extends TileEntityMachineBase implements
 			if(this.tank.getFill() < recipe.fluid.fill) return false;
 		}
 
-		int mult = 1 << upgradeManager.ultimateCount;
 		if(slots[3] != null) {
 			if(slots[3].getItem() != recipe.output.getItem()) return false;
 			if(slots[3].getItemDamage() != recipe.output.getItemDamage()) return false;
-			if(slots[3].stackSize + recipe.output.stackSize * mult > slots[3].getMaxStackSize()) return false;
+			if(slots[3].stackSize + recipe.output.stackSize > slots[3].getMaxStackSize()) return false;
 		}
 
 		return true;

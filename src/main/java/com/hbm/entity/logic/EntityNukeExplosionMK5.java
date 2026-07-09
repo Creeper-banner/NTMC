@@ -8,7 +8,6 @@ import org.apache.logging.log4j.Level;
 import com.hbm.config.BombConfig;
 import com.hbm.config.GeneralConfig;
 import com.hbm.entity.effect.EntityFalloutRain;
-import com.hbm.explosion.ExplosionFilter;
 import com.hbm.explosion.ExplosionNukeGeneric;
 import com.hbm.explosion.ExplosionNukeRayBatched;
 import com.hbm.main.MainRegistry;
@@ -51,11 +50,6 @@ public class EntityNukeExplosionMK5 extends EntityExplosionChunkloading {
 
 	@Override
 	public void onUpdate() {
-		if (ExplosionFilter.shouldBlock(worldObj, posX, posY, posZ)) {
-			this.clearChunkLoader();
-			this.setDead();
-			return;
-		}
 
 		if(strength == 0) {
 			this.clearChunkLoader();

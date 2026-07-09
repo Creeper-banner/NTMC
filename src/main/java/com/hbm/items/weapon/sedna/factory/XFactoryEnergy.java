@@ -6,8 +6,6 @@ import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
 import com.hbm.entity.effect.EntityFireLingering;
-import com.hbm.entity.effect.EntityCloudFleija;
-import com.hbm.entity.logic.EntityNukeExplosionMK3;
 import com.hbm.entity.projectile.EntityBulletBeamBase;
 import com.hbm.explosion.vanillant.ExplosionVNT;
 import com.hbm.explosion.vanillant.standard.EntityProcessorCrossSmooth;
@@ -34,12 +32,6 @@ import com.hbm.render.anim.BusAnimation;
 import com.hbm.render.anim.BusAnimationSequence;
 import com.hbm.render.anim.BusAnimationKeyframe.IType;
 import com.hbm.util.DamageResistanceHandler.DamageClass;
-import com.hbm.explosion.ExplosionChaos;
-import com.hbm.explosion.ExplosionLarge;
-import com.hbm.lib.ModDamageSource;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.DamageSource;
-import com.hbm.items.weapon.sedna.factory.Lego;
 
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraft.block.Block;
@@ -64,8 +56,6 @@ public class XFactoryEnergy {
 	public static BulletConfig energy_tesla_overcharge;
 	public static BulletConfig energy_tesla_ir;
 	public static BulletConfig energy_tesla_ir_sub;
-	public static BulletConfig energy_pppop;
-	public static BulletConfig energy_pppop_steel;
 
 	public static BulletConfig energy_las;
 	public static BulletConfig energy_las_overcharge;
@@ -171,81 +161,8 @@ public class XFactoryEnergy {
 		energy_tesla_ir = new BulletConfig().setItem(EnumAmmo.CAPACITOR_IR).setCasing(new ItemStack(ModItems.ingot_polymer, 2), 4).setupDamageClass(DamageClass.ELECTRIC).setBeam().setSpread(0.0F).setLife(5).setRenderRotations(false)
 				.setDamage(0.8F).setOnBeamImpact(LAMBDA_LIGHTNING_SPLIT);
 		energy_tesla_ir_sub = new BulletConfig().setItem(EnumAmmo.CAPACITOR_IR).setupDamageClass(DamageClass.ELECTRIC).setBeam().setSpread(0.0F).setLife(3).setWear(3F).setRenderRotations(false).setDoesPenetrate(true)
-				.setDamage(0.5F).setOnBeamImpact(BulletConfig.LAMBDA_STANDARD_BEAM_HIT);		energy_pppop = new BulletConfig()
-				.setItem(ModItems.ingot_euphemium)
-				.setVel(12.0F)
-				.setSpread(0.05F)
-				.setLife(25)
-				.setProjectiles(5)
-				.setWear(1.0F)
-				.setupDamageClass(DamageClass.SUBATOMIC)
-				.setDoesPenetrate(true)
-				.setReloadCount(250)
-				.setOnImpact((bullet, mop) -> {
-					if(!bullet.worldObj.isRemote) {
-						int x = (int)Math.floor(bullet.posX);
-						int y = (int)Math.floor(bullet.posY);
-						int z = (int)Math.floor(bullet.posZ);
-						ExplosionChaos.explodeZOMG(bullet.worldObj, x, y, z, 5);
-						bullet.worldObj.playSoundEffect(bullet.posX, bullet.posY, bullet.posZ, "hbm:entity.bombDet", 5.0F, 1.0F);
-						ExplosionLarge.spawnParticles(bullet.worldObj, bullet.posX, bullet.posY, bullet.posZ, 5);
+				.setDamage(0.5F).setOnBeamImpact(BulletConfig.LAMBDA_STANDARD_BEAM_HIT);
 
-						EntityNukeExplosionMK3 ex = EntityNukeExplosionMK3.statFacFleija(bullet.worldObj, bullet.posX, bullet.posY, bullet.posZ, 6);
-						if(!ex.isDead) {
-							bullet.worldObj.spawnEntityInWorld(ex);
-							EntityCloudFleija cloud = new EntityCloudFleija(bullet.worldObj, 10);
-							cloud.posX = bullet.posX;
-							cloud.posY = bullet.posY;
-							cloud.posZ = bullet.posZ;
-							bullet.worldObj.spawnEntityInWorld(cloud);
-						}
-						bullet.worldObj.playSoundEffect(bullet.posX, bullet.posY, bullet.posZ, "hbm:entity.oldExplosion", 5.0F, 0.8F + bullet.worldObj.rand.nextFloat() * 0.2F);
-					}
-				})
-				.setOnEntityHit((bullet, mop) -> {
-					if(mop.entityHit != null) {
-						float dmg = 100000F + bullet.worldObj.rand.nextFloat() * 150000F;
-						mop.entityHit.attackEntityFrom(ModDamageSource.causeSubatomicDamage(bullet, bullet.getThrower()), dmg);
-						
-						if(!bullet.worldObj.isRemote) {
-							EntityNukeExplosionMK3 ex = EntityNukeExplosionMK3.statFacFleija(bullet.worldObj, bullet.posX, bullet.posY, bullet.posZ, 6);
-							if(!ex.isDead) {
-								bullet.worldObj.spawnEntityInWorld(ex);
-								EntityCloudFleija cloud = new EntityCloudFleija(bullet.worldObj, 10);
-								cloud.posX = bullet.posX;
-								cloud.posY = bullet.posY;
-								cloud.posZ = bullet.posZ;
-								bullet.worldObj.spawnEntityInWorld(cloud);
-							}
-							bullet.worldObj.playSoundEffect(bullet.posX, bullet.posY, bullet.posZ, "hbm:entity.oldExplosion", 5.0F, 0.8F + bullet.worldObj.rand.nextFloat() * 0.2F);
-						}
-					}
-				})
-				.setDamage(0F);
-
-		energy_pppop_steel = new BulletConfig()
-				.setItem(ModItems.steel_pickaxe)
-				.setVel(4.0F)
-				.setSpread(0.05F)
-				.setLife(25)
-				.setProjectiles(5)
-				.setWear(1.0F)
-				.setupDamageClass(DamageClass.SUBATOMIC)
-				.setDoesPenetrate(true)
-				.setReloadCount(250)
-				.setOnImpact((bullet, mop) -> {
-					if(!bullet.worldObj.isRemote) {
-						bullet.worldObj.playSoundEffect(bullet.posX, bullet.posY, bullet.posZ, "random.explode", 1.0F, 1.0F);
-					}
-				})
-				.setOnEntityHit((bullet, mop) -> {
-					if(mop.entityHit != null) {
-						EntityLivingBase thrower = bullet.getThrower();
-						float dmg = 35F + bullet.worldObj.rand.nextFloat() * 10F;
-						mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(bullet, thrower), dmg);
-					}
-				})
-				.setDamage(0F);
 		energy_las = new BulletConfig().setItem(EnumAmmo.CAPACITOR).setCasing(new ItemStack(ModItems.ingot_polymer, 2), 4).setupDamageClass(DamageClass.LASER).setBeam().setSpread(0.0F).setLife(5).setRenderRotations(false).setOnBeamImpact(BulletConfig.LAMBDA_STANDARD_BEAM_HIT);
 		energy_las_overcharge = new BulletConfig().setItem(EnumAmmo.CAPACITOR_OVERCHARGE).setCasing(new ItemStack(ModItems.ingot_polymer, 2), 4).setupDamageClass(DamageClass.LASER).setBeam().setSpread(0.0F).setLife(5).setRenderRotations(false).setDoesPenetrate(true).setOnBeamImpact(BulletConfig.LAMBDA_STANDARD_BEAM_HIT);
 		energy_las_ir = new BulletConfig().setItem(EnumAmmo.CAPACITOR_IR).setCasing(new ItemStack(ModItems.ingot_polymer, 2), 4).setupDamageClass(DamageClass.FIRE).setBeam().setSpread(0.0F).setLife(5).setRenderRotations(false).setOnBeamImpact(LAMBDA_IR_HIT);
@@ -306,34 +223,6 @@ public class XFactoryEnergy {
 				.setupStandardConfiguration()
 				.anim(LAMBDA_LASRIFLE).orchestra(Orchestras.ORCHESTRA_LASRIFLE)
 				).setDefaultAmmo(EnumAmmo.CAPACITOR, 24).setUnlocalizedName("gun_lasrifle");
-
-		ModItems.gun_pppop = new ItemGunBaseNT(WeaponQuality.LEGENDARY, new GunConfig()
-				.dura(100_000).draw(10).inspect(26).crosshair(Crosshair.L_ARROWS)
-				.rec(new Receiver(0)
-						.dmg(1.0F).delay(1).spread(0.05F).spreadHipfire(0.05F).reload(10).jam(0)
-						.auto(true)
-						.mag(new MagazineFullReload(0, 250).addConfigs(energy_pppop, energy_pppop_steel))
-						.offset(0.75, -0.0625 * 1.5, -0.1875)
-						.canFire(Lego.LAMBDA_STANDARD_CAN_FIRE)
-						.fire((itemStack, lambdaContext) -> {
-							Lego.LAMBDA_STANDARD_FIRE.accept(itemStack, lambdaContext);
-							EntityLivingBase entity = lambdaContext.entity;
-							BulletConfig currentBullet = null;
-							if (lambdaContext.config.getReceivers(itemStack).length > 0) {
-								currentBullet = (BulletConfig) lambdaContext.config.getReceivers(itemStack)[0]
-										.getMagazine(itemStack)
-										.getType(itemStack, lambdaContext.inventory);
-							}
-							if (entity instanceof EntityPlayer) {
-								com.hbm.util.AchievementHandler.grantAchievement((EntityPlayer) entity, MainRegistry.achPPPOP);
-							}
-							String snd = (currentBullet == energy_pppop) ? "hbm:weapon.zomgShoot" : "hbm:weapon.osiprShoot";
-							entity.worldObj.playSoundEffect(entity.posX, entity.posY, entity.posZ, snd, 1.0F, 1.0F);
-						})
-						.recoil(LAMBDA_RECOIL_ENERGY))
-				.setupStandardConfiguration()
-				.anim(LAMBDA_LASER_PISTOL).orchestra(Orchestras.ORCHESTRA_LASER_PISTOL)
-				).setUnlocalizedName("gun_pppop").setTextureName(RefStrings.MODID + ":gun_pppop");
 	}
 
 	public static BiConsumer<ItemStack, LambdaContext> LAMBDA_RECOIL_ENERGY = (stack, ctx) -> { };

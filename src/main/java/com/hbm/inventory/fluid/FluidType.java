@@ -171,33 +171,14 @@ public class FluidType {
 	}
 
 	public int getColor() {
-		if ("QGP".equals(this.stringId)) {
-			float speed = 1.5F;
-			float iTime = (System.currentTimeMillis() % 100000) / 1000.0F;
-			int r = (int)((0.5F + 0.5F * Math.sin(iTime * speed)) * 255);
-			int g = (int)((0.5F + 0.5F * Math.sin(-iTime * speed * 0.8F + 2.0F)) * 255);
-			int b = (int)((0.5F + 0.5F * Math.sin(iTime * speed * 1.2F + 4.0F)) * 255);
-			return (r << 16) | (g << 8) | b;
-		}
 		return this.color;
 	}
 
 	public int getTint() {
-		if ("QGP".equals(this.stringId)) {
-			float speed = 1.5F;
-			float iTime = (System.currentTimeMillis() % 100000) / 1000.0F;
-			int r = (int)((0.5F + 0.5F * Math.sin(iTime * speed)) * 255);
-			int g = (int)((0.5F + 0.5F * Math.sin(-iTime * speed * 0.8F + 2.0F)) * 255);
-			int b = (int)((0.5F + 0.5F * Math.sin(iTime * speed * 1.2F + 4.0F)) * 255);
-			return (r << 16) | (g << 8) | b;
-		}
 		return this.guiTint;
 	}
 
 	public ResourceLocation getTexture() {
-		if ("QGP".equals(this.stringId)) {
-			return new ResourceLocation(RefStrings.MODID + ":textures/gui/fluids/water.png");
-		}
 		return this.texture;
 	}
 	public String getUnlocalizedName() {

@@ -17,7 +17,6 @@ import net.minecraft.world.World;
 @Deprecated public class ExplosionNukeSmall {
 
 	public static void explode(World world, double posX, double posY, double posZ, MukeParams params) {
-		if (ExplosionFilter.shouldBlock(world, posX, posY, posZ)) return;
 
 		// spawn particles, if present
 		if(params.particle != null) {

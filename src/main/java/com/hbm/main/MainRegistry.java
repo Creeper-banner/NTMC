@@ -226,9 +226,6 @@ public class MainRegistry {
 	public static Achievement achSoyuz;
 	public static Achievement achSpace;
 	public static Achievement achSchrab;
-	public static Achievement achPPPOP;
-	public static Achievement achAMSBase;
-	public static Achievement achQGP;
 	public static Achievement achAcidizer;
 	public static Achievement achRadium;
 	public static Achievement achTechnetium;
@@ -466,9 +463,6 @@ public class MainRegistry {
 		achFusion = new Achievement("achievement.fusion", "fusion", 13, -7, new ItemStack(ModBlocks.fusion_torus), achBismuth).initIndependentStat().setSpecial().registerStat();
 		achRedBalloons = new Achievement("achievement.redBalloons", "redBalloons", 11, 0, ModItems.missile_nuclear, achPolymer).initIndependentStat().setSpecial().registerStat();
 		achManhattan = new Achievement("achievement.manhattan", "manhattan", 11, -4, new ItemStack(ModBlocks.nuke_boy), achPolymer).initIndependentStat().setSpecial().registerStat();
-		achPPPOP = new Achievement("achievement.pppop", "pppop", 16, 3, ModItems.gun_pppop, null).initIndependentStat().setSpecial().registerStat();
-		achAMSBase = new Achievement("achievement.amsBase", "amsBase", 16, 5, ModBlocks.ams_base, null).initIndependentStat().setSpecial().registerStat();
-		achQGP = new Achievement("achievement.qgp", "qgp", 16, 7, ModItems.bucket_qgp, null).initIndependentStat().setSpecial().registerStat();
 
 		AchievementPage.registerAchievementPage(new AchievementPage("Nuclear Tech", new Achievement[] {
 			achSacrifice,
@@ -535,9 +529,6 @@ public class MainRegistry {
 			achFusion,
 			achRedBalloons,
 			achManhattan,
-			achPPPOP,
-			achAMSBase,
-			achQGP,
 		}));
 
 		// MUST be initialized AFTER achievements!!
@@ -1115,6 +1106,9 @@ public class MainRegistry {
 		ignoreMappings.add("hbm:tile.anvil_bismuth");
 		ignoreMappings.add("hbm:tile.lamp_uv_off");
 		ignoreMappings.add("hbm:tile.lamp_uv_on");
+		ignoreMappings.add("hbm:tile.ams_base");
+		ignoreMappings.add("hbm:tile.ams_emitter");
+		ignoreMappings.add("hbm:tile.ams_limiter");
 		ignoreMappings.add("hbm:tile.dummy_block_ams_limiter");
 		ignoreMappings.add("hbm:tile.dummy_port_ams_limiter");
 		ignoreMappings.add("hbm:tile.dummy_block_ams_emitter");
@@ -1366,6 +1360,7 @@ public class MainRegistry {
 		ignoreMappings.add("hbm:item.gun_cryolator");
 		ignoreMappings.add("hbm:item.gun_mp");
 		ignoreMappings.add("hbm:item.gun_bolter_digamma");
+		ignoreMappings.add("hbm:item.gun_zomg");
 		ignoreMappings.add("hbm:item.gun_super_shotgun");
 		ignoreMappings.add("hbm:item.gun_moist_nugget");
 		ignoreMappings.add("hbm:item.gun_revolver_inverted");
@@ -1568,6 +1563,10 @@ public class MainRegistry {
 		ignoreMappings.add("hbm:item.sliding_blast_door_skin");
 		ignoreMappings.add("hbm:tile.dummy_block_vault");
 		ignoreMappings.add("hbm:item.toothpicks");
+		ignoreMappings.add("hbm:item.ams_focus_blank");
+		ignoreMappings.add("hbm:item.ams_focus_limiter");
+		ignoreMappings.add("hbm:item.ams_focus_booster");
+		ignoreMappings.add("hbm:item.ams_muzzle");
 		ignoreMappings.add("hbm:tile.machine_transformer_dnt");
 		ignoreMappings.add("hbm:tile.hadron_plating");
 		ignoreMappings.add("hbm:tile.hadron_plating_blue");
@@ -1720,7 +1719,6 @@ public class MainRegistry {
 		remapItems.put("hbm:item.briquette_lignite", ModItems.briquette);
 		remapItems.put("hbm:item.antiknock", ModItems.fuel_additive);
 		remapItems.put("hbm:item.kit_toolbox_empty", ModItems.toolbox);
-		remapItems.put("hbm:item.gun_zomg", ModItems.gun_pppop);
 
 		for(MissingMapping mapping : event.get()) {
 

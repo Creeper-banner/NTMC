@@ -1,6 +1,5 @@
 package com.hbm.main;
 
-import com.hbm.explosion.ExplosionFilter;
 import com.hbm.blocks.BlockVolcanoV2.TileEntityLightningVolcano;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.generic.BlockBobble.TileEntityBobble;
@@ -69,8 +68,6 @@ import com.hbm.render.item.ItemRenderMissileGeneric.RenderMissileType;
 import com.hbm.render.item.block.ItemRenderBlock;
 import com.hbm.render.item.block.ItemRenderDecoBlock;
 import com.hbm.render.item.weapon.*;
-import com.hbm.render.item.weapon.sedna.ItemRenderPPPOP;
-import com.hbm.render.item.weapon.sedna.ItemRenderQGPDisperser;
 import com.hbm.render.loader.HFRModelReloader;
 import com.hbm.render.loader.HmfModelLoader;
 import com.hbm.render.model.ModelDepthSquid;
@@ -402,9 +399,6 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMachineAlkylation.class, new RenderAlkylation());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMachineMagma.class, new RenderMagma());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHydroponic.class, new RenderHydroponic());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAMSBase.class, new RenderAMSBase());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAMSEmitter.class, new RenderAMSEmitter());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAMSLimiter.class, new RenderAMSLimiter());
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPistonInserter.class, new RenderPistonInserter());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityConveyorPress.class, new RenderConveyorPress());
@@ -569,12 +563,6 @@ public class ClientProxy extends ServerProxy {
 		MinecraftForgeClient.registerItemRenderer(ModItems.schrabidium_sword, new ItemRenderTransformer(rtp, ttp_high, stp, rfp, tfp, sfp, rir, tir, sir));
 		MinecraftForgeClient.registerItemRenderer(ModItems.cmb_sword, new ItemRenderTransformer(rtp, ttp_high, stp, rfp, tfp, sfp, rir, tir, sir));
 		MinecraftForgeClient.registerItemRenderer(ModItems.dnt_sword, new ItemRenderTransformer(rtp, ttp_high, stp, rfp, tfp, sfp, rir, tir, sir));
-
-		MinecraftForgeClient.registerItemRenderer(ModItems.gun_pppop, new ItemRenderPPPOP());
-		MinecraftForgeClient.registerItemRenderer(ModItems.bucket_qgp, new ItemRenderQGPBucket());
-		MinecraftForgeClient.registerItemRenderer(ModItems.qgp_mining_bomb, new ItemRenderQGPMiningBomb());
-		MinecraftForgeClient.registerItemRenderer(ModItems.upgrade_ultimate, new ItemRenderUltimateUpgrade());
-		MinecraftForgeClient.registerItemRenderer(ModItems.disperser_canister, new ItemRenderQGPDisperser());
 
 		double[] sfp_default = new double[] {1, 1, 1};
 		double[] tfp_default = new double[] {0, 0, 0};
@@ -906,9 +894,6 @@ public class ClientProxy extends ServerProxy {
 		RenderingRegistry.registerBlockHandler(new RenderPribris());
 
 		RenderingRegistry.registerBlockHandler(new RenderBlockWand());
-
-		RenderQGPBlock.renderId = RenderingRegistry.getNextAvailableRenderId();
-		RenderingRegistry.registerBlockHandler(new RenderQGPBlock());
 	}
 
 	@Override
@@ -948,31 +933,6 @@ public class ClientProxy extends ServerProxy {
 		boolean inOrbit = CelestialBody.inOrbit(world);
 		CBT_Atmosphere atmosphere = !inOrbit ? CelestialBody.getTrait(world, CBT_Atmosphere.class) : null;
 		double pressure = atmosphere != null ? atmosphere.getPressure() : 0;
-
-		if ("muke".equals(type)) {
-			if (ExplosionFilter.shouldBlock(world, x, y, z)) {
-				return;
-			}
-		}
-
-		if ("pppopShield".equals(type)) {
-			double targetX = data.getDouble("targetX");
-			double targetY = data.getDouble("targetY");
-			double targetZ = data.getDouble("targetZ");
-			double dx = targetX - x;
-			double dy = targetY - y;
-			double dz = targetZ - z;
-			double dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
-			int count = (int) (dist * 6);
-			for (int i = 0; i < count; i++) {
-				double progress = i / (double) count;
-				double px = x + dx * progress;
-				double py = y + dy * progress;
-				double pz = z + dz * progress;
-				world.spawnParticle("reddust", px + rand.nextGaussian() * 0.15D, py + rand.nextGaussian() * 0.15D, pz + rand.nextGaussian() * 0.15D, 0.001D, 1.0D, 0.001D);
-			}
-			return;
-		}
 
 		if(ParticleCreators.particleCreators.containsKey(type)) {
 			ParticleCreators.particleCreators.get(type).makeParticle(world, player, man, rand, x, y, z, data);

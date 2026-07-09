@@ -1,7 +1,6 @@
 package com.hbm.entity.logic;
 
 import com.hbm.main.MainRegistry;
-import com.hbm.explosion.ExplosionFilter;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.world.ChunkCoordIntPair;
@@ -49,15 +48,5 @@ public abstract class EntityExplosionChunkloading extends Entity implements IChu
 			ForgeChunkManager.releaseTicket(loaderTicket);
 			this.loaderTicket = null;
 		}
-	}
-
-	@Override
-	public void onUpdate() {
-		if (ExplosionFilter.shouldBlock(worldObj, posX, posY, posZ)) {
-			this.clearChunkLoader();
-			this.setDead();
-			return;
-		}
-		super.onUpdate();
 	}
 }

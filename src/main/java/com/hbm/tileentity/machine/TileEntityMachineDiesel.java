@@ -58,7 +58,6 @@ public class TileEntityMachineDiesel extends TileEntityMachinePolluting implemen
 		fuelEfficiency.put(FuelGrade.MEDIUM,	0.5D);
 		fuelEfficiency.put(FuelGrade.HIGH,		0.75D);
 		fuelEfficiency.put(FuelGrade.AERO,		0.1D);
-		fuelEfficiency.put(FuelGrade.QGP,		3.0D);
 	}
 
 	private static final int[] slots_top = new int[] { 0 };

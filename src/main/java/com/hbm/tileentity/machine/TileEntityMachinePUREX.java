@@ -107,13 +107,6 @@ public class TileEntityMachinePUREX extends TileEntityMachineBase implements IEn
 			pow *= speedLevel + 1D;
 			pow *= over;
 
-			this.purexModule.hasUltimate = upgradeManager.hasUltimate;
-			this.purexModule.ultimateCount = upgradeManager.ultimateCount;
-			if(upgradeManager.ultimateCount > 0) {
-				speed = speed * (1.0D + upgradeManager.ultimateCount * 4.0D);
-				pow = pow * Math.pow(0.5D, upgradeManager.ultimateCount);
-			}
-
 			this.purexModule.update(speed, pow, true, slots[1]);
 			this.didProcess = this.purexModule.didProcess;
 			if(this.purexModule.markDirty) this.markDirty();

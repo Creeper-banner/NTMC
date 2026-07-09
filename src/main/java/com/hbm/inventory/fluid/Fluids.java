@@ -100,7 +100,6 @@ public class Fluids {
 	public static FluidType SAS3;
 	public static FluidType SCHRABIDIC;
 	public static FluidType AMAT;
-	public static FluidType QGP;
 	public static FluidType ASCHRAB;
 	public static FluidType PEROXIDE;
 	public static FluidType WATZ;
@@ -828,7 +827,7 @@ public class Fluids {
 				.addEntry(new ToxinEffects(HazardClass.GAS_BLISTERING, true).add(new PotionEffect(Potion.wither.id, 100, 1), new PotionEffect(Potion.confusion.id, 100, 0))));
 		ESTRADIOL.addTraits(new FT_Toxin().addEntry(new ToxinEffects(HazardClass.PARTICLE_FINE, false).add(new PotionEffect(HbmPotion.death.id, 60 * 60 * 20, 0))));
 		REDMUD.addTraits(new FT_Toxin().addEntry(new ToxinEffects(HazardClass.GAS_BLISTERING, false).add(new PotionEffect(Potion.wither.id, 30 * 20, 2))));
-
+		
 		AIR.addTraits(new FT_Heatable().setEff(HeatingType.BOILER, 1.0D).addStep(5, 1, AIRBLAST, 1));
 
 		double eff_steam_boil = 1.0D;
@@ -906,13 +905,6 @@ public class Fluids {
 
 		NITROGEN.addTraits(new FT_Heatable().setEff(HeatingType.HEATEXCHANGER, 1.0D).setEff(HeatingType.PA, 1.0D).addStep(100, 1, NONE, 0));  //just trying to get a "super coolant"...
 
-		QGP = new FluidType("QGP", 0xFF5500, 4, 0, 4, EnumSymbol.RADIATION)
-				.setTemp(10000000)
-				.addContainers(new CD_Canister(0xFF5500))
-				.addTraits(LIQUID, PLASMA, EXPLOSIVE, LEADCON, new FT_VentRadiation(0.5F));
-		QGP.addTraits(new FT_Coolable(NONE, 1, 0, 12500000).setEff(CoolingType.TURBINE, 3.0D).setEff(CoolingType.HEATEXCHANGER, 3.0D));
-		metaOrder.add(QGP);
-
 		if(idMapping.size() != metaOrder.size()) {
 			throw new IllegalStateException("A severe error has occoured during NTM's fluid registering process! The MetaOrder and Mappings are inconsistent! Mapping size: " + idMapping.size()+ " / MetaOrder size: " + metaOrder.size());
 		}
@@ -981,7 +973,6 @@ public class Fluids {
 		registerCalculatedFuel(DIESEL_CRACK_REFORM, DIESEL_CRACK.getTrait(FT_Flammable.class).getHeatEnergy() * complexityReform, 2.5D, FuelGrade.HIGH);
 		registerCalculatedFuel(KEROSENE_REFORM, KEROSENE.getTrait(FT_Flammable.class).getHeatEnergy() * complexityReform, 1.5D, FuelGrade.AERO);
 		registerCalculatedFuel(NMASSTETRANOL, BALEFIRE.getTrait(FT_Flammable.class).getHeatEnergy() * 1000, 10.5, FuelGrade.HIGH); //0.8
-		registerCalculatedFuel(QGP, BALEFIRE.getTrait(FT_Flammable.class).getHeatEnergy() * 500L, 3.0, FuelGrade.QGP);
 		registerCalculatedFuel(DICYANOACETYLENE, (baseline / 0.15 * flammabilityHigh * demandHigh * complexityRefinery * complexityCracking) + UNSATURATEDS.getTrait(FT_Flammable.class).getHeatEnergy(), 0, null);
 
 		registerCalculatedFuel(REFORMGAS, (baseline / 0.06 * flammabilityHigh * demandLow * complexityVacuum * complexityFraction), 1.5D, FuelGrade.GAS);
@@ -1135,7 +1126,7 @@ public class Fluids {
 			ex.printStackTrace();
 		}
 	}
-
+	
 	public static HashMap<String, FluidType> fluidMigration = new HashMap(); // since reloading would create new fluid instances, and those break existing machines
 
 	public static void reloadFluids(){

@@ -11,7 +11,6 @@ import api.hbm.energymk2.IEnergyConnectorMK2;
 import api.hbm.energymk2.IEnergyReceiverMK2;
 import api.hbm.fluidmk2.IFluidConnectorMK2;
 import api.hbm.fluidmk2.IFluidReceiverMK2;
-import api.hbm.fluidmk2.IFluidProviderMK2;
 import api.hbm.redstoneoverradio.IRORInfo;
 import api.hbm.redstoneoverradio.IRORInteractive;
 import api.hbm.redstoneoverradio.IRORValueProvider;
@@ -35,7 +34,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 		@Optional.Interface(iface = "com.hbm.handler.CompatHandler.OCComponent", modid = "opencomputers"),
 		@Optional.Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = "opencomputers")
 })
-public class TileEntityProxyCombo extends TileEntityProxyBase implements IEnergyReceiverMK2, IEnergyConductorMK2, ISidedInventory, IFluidReceiverMK2, IFluidProviderMK2, IHeatSource, ICrucibleAcceptor, SimpleComponent, OCComponent, IRORValueProvider, IRORInteractive {
+public class TileEntityProxyCombo extends TileEntityProxyBase implements IEnergyReceiverMK2, IEnergyConductorMK2, ISidedInventory, IFluidReceiverMK2, IHeatSource, ICrucibleAcceptor, SimpleComponent, OCComponent, IRORValueProvider, IRORInteractive {
 
 	TileEntity tile;
 	boolean inventory;
@@ -213,32 +212,6 @@ public class TileEntityProxyCombo extends TileEntityProxyBase implements IEnergy
 			return ((IFluidConnectorMK2) getCoreObject()).canConnect(type, dir);
 		}
 		return true;
-	}
-
-	@Override
-	public void useUpFluid(FluidType type, int pressure, long amount) {
-		if(!fluid) return;
-		if(getCoreObject() instanceof IFluidProviderMK2) {
-			((IFluidProviderMK2)getCoreObject()).useUpFluid(type, pressure, amount);
-		}
-	}
-
-	@Override
-	public long getFluidAvailable(FluidType type, int pressure) {
-		if(!fluid) return 0;
-		if(getCoreObject() instanceof IFluidProviderMK2) {
-			return ((IFluidProviderMK2)getCoreObject()).getFluidAvailable(type, pressure);
-		}
-		return 0;
-	}
-
-	@Override
-	public int[] getProvidingPressureRange(FluidType type) {
-		if(!fluid) return DEFAULT_PRESSURE_RANGE;
-		if(getCoreObject() instanceof IFluidProviderMK2) {
-			return ((IFluidProviderMK2)getCoreObject()).getProvidingPressureRange(type);
-		}
-		return DEFAULT_PRESSURE_RANGE;
 	}
 
 	@Override

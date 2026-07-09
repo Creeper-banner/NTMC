@@ -116,13 +116,6 @@ public class TileEntityMachinePrecAss extends TileEntityMachineBase implements I
 			pow -= Math.min(upgradeManager.getLevel(UpgradeType.POWER), 3) * 0.25D;
 			pow += Math.min(upgradeManager.getLevel(UpgradeType.SPEED), 3) * 1D;
 			pow += Math.min(upgradeManager.getLevel(UpgradeType.OVERDRIVE), 3) * 10D / 3D;
-
-			this.assemblerModule.hasUltimate = upgradeManager.hasUltimate;
-			this.assemblerModule.ultimateCount = upgradeManager.ultimateCount;
-			if(upgradeManager.ultimateCount > 0) {
-				speed = speed * (1.0D + upgradeManager.ultimateCount * 4.0D);
-				pow = pow * Math.pow(0.5D, upgradeManager.ultimateCount);
-			}
 			
 			this.assemblerModule.update(speed, pow, true, slots[1]);
 			this.didProcess = this.assemblerModule.didProcess;

@@ -124,11 +124,10 @@ public class TileEntityMachineSchrabidiumTransmutator extends TileEntityMachineB
 
     public boolean canProcess() {
         //&& (slots[2].getItem() == ModItems.redcoil_capacitor && slots[2].getItemDamage() < slots[2].getMaxDamage() || slots[2].getItem() == ModItems.euphemium_capacitor)
-		int mult = 1 << upgradeManager.ultimateCount;
         return power >= consumption // if the power is enough
                 && slots[0] != null && MachineRecipes.mODE(slots[0], OreDictManager.U.ingot())  // if the input is uranium ingot
                 // && slots[2] != null // and originally if the capacitor slot has item (deprecated)
-                && (slots[1] == null || slots[1].getItem() == VersatileConfig.getTransmutatorItem() && slots[1].stackSize + mult <= slots[1].getMaxStackSize()); // and whether the output can be successfully inserted into the output slot
+                && (slots[1] == null || slots[1].getItem() == VersatileConfig.getTransmutatorItem() && slots[1].stackSize < slots[1].getMaxStackSize()); // and whether the output can be successfully inserted into the output slot
     }
 
     public boolean isProcessing() {
@@ -150,11 +149,10 @@ public class TileEntityMachineSchrabidiumTransmutator extends TileEntityMachineB
                 slots[0] = null;
             }
 
-            int mult = 1 << upgradeManager.ultimateCount;
             if (slots[1] == null) {
-                slots[1] = new ItemStack(VersatileConfig.getTransmutatorItem(), mult);
+                slots[1] = new ItemStack(VersatileConfig.getTransmutatorItem());
             } else {
-                slots[1].stackSize += mult;
+                slots[1].stackSize++;
             }
 
             //if (slots[2] != null && slots[2].getItem() == ModItems.redcoil_capacitor) {
@@ -181,12 +179,6 @@ public class TileEntityMachineSchrabidiumTransmutator extends TileEntityMachineB
 
             progress = baseProgress * (4 - speedLevel) / 4 / (overLevel * overLevel + 1);
             consumption = baseConsumption * (speedLevel + 1) * (overLevel * overLevel + 1);
-
-			if(upgradeManager.ultimateCount > 0) {
-				int speedFactor = 1 + upgradeManager.ultimateCount * 4;
-				progress = Math.max(progress / speedFactor, 1);
-				consumption = (int) (consumption * Math.pow(0.5D, upgradeManager.ultimateCount));
-			}
             /*
              *   speed: 1.33/2/4 for speed, 2/5/10 fpr overdrive
              *   consumption: 2/3/4 for speed and 2/5/10 for overdrive

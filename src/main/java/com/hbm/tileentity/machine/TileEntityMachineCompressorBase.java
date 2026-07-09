@@ -90,12 +90,6 @@ public abstract class TileEntityMachineCompressorBase extends TileEntityMachineB
 			this.powerRequirement = this.powerRequirementBase / (powerLevel + 1);
 			this.powerRequirement = this.powerRequirement * speed * over;
 
-			if(upgradeManager.ultimateCount > 0) {
-				int speedFactor = 1 + upgradeManager.ultimateCount * 4;
-				this.processTime = Math.max(this.processTime / speedFactor, 1);
-				this.powerRequirement = (int)(this.powerRequirement * Math.pow(0.5D, upgradeManager.ultimateCount));
-			}
-
 			if(processTime <= 0) processTime = 1;
 
 			if(canProcess()) {
@@ -162,25 +156,23 @@ public abstract class TileEntityMachineCompressorBase extends TileEntityMachineB
 
 		CompressorRecipe recipe = CompressorRecipes.recipes.get(new Pair(tanks[0].getTankType(), tanks[0].getPressure()));
 
-		int mult = 1 << upgradeManager.ultimateCount;
 		if(recipe == null) {
-			return tanks[0].getFill() >= 1000 && tanks[1].getFill() + 1000 * mult <= tanks[1].getMaxFill();
+			return tanks[0].getFill() >= 1000 && tanks[1].getFill() + 1000 <= tanks[1].getMaxFill();
 		}
 
-		return tanks[0].getFill() >= recipe.inputAmount && tanks[1].getFill() + recipe.output.fill * mult <= tanks[1].getMaxFill();
+		return tanks[0].getFill() >= recipe.inputAmount && tanks[1].getFill() + recipe.output.fill <= tanks[1].getMaxFill();
 	}
 
 	public void process() {
 
 		CompressorRecipe recipe = CompressorRecipes.recipes.get(new Pair(tanks[0].getTankType(), tanks[0].getPressure()));
 
-		int mult = 1 << upgradeManager.ultimateCount;
 		if(recipe == null) {
 			tanks[0].setFill(tanks[0].getFill() - 1_000);
-			tanks[1].setFill(tanks[1].getFill() + 1_000 * mult);
+			tanks[1].setFill(tanks[1].getFill() + 1_000);
 		} else {
 			tanks[0].setFill(tanks[0].getFill() - recipe.inputAmount);
-			tanks[1].setFill(tanks[1].getFill() + recipe.output.fill * mult);
+			tanks[1].setFill(tanks[1].getFill() + recipe.output.fill);
 		}
 	}
 

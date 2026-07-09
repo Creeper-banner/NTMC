@@ -84,10 +84,6 @@ public class TileEntityMachineMixer extends TileEntityMachineBase implements ICo
 			this.consumption -= this.consumption * powerLevel / 4;
 			this.consumption *= over;
 
-			if(upgradeManager.ultimateCount > 0) {
-				this.consumption = (int) (this.consumption * Math.pow(0.5D, upgradeManager.ultimateCount));
-			}
-
 			for(DirPos pos : getConPos()) {
 				this.trySubscribe(worldObj, pos.getX(), pos.getY(), pos.getZ(), pos.getDir());
 				if(tanks[0].getTankType() != Fluids.NONE) this.trySubscribe(tanks[0].getTankType(), worldObj, pos.getX(), pos.getY(), pos.getZ(), pos.getDir());
@@ -102,11 +98,6 @@ public class TileEntityMachineMixer extends TileEntityMachineBase implements ICo
 
 				this.processTime -= this.processTime * speedLevel / 4;
 				this.processTime /= over;
-
-				if(upgradeManager.ultimateCount > 0) {
-					int speedFactor = 1 + upgradeManager.ultimateCount * 4;
-					this.processTime = Math.max(this.processTime / speedFactor, 1);
-				}
 
 				if(processTime <= 0) this.processTime = 1;
 
@@ -197,8 +188,7 @@ public class TileEntityMachineMixer extends TileEntityMachineBase implements ICo
 		/* simplest check would usually go first, but fluid checks also do the setup and we want that to happen even without power */
 		if(this.power < getConsumption()) return false;
 
-		int mult = 1 << upgradeManager.ultimateCount;
-		if(recipe.output * mult + tanks[2].getFill() > tanks[2].getMaxFill()) return false;
+		if(recipe.output + tanks[2].getFill() > tanks[2].getMaxFill()) return false;
 
 		if(recipe.solidInput != null) {
 
@@ -219,8 +209,7 @@ public class TileEntityMachineMixer extends TileEntityMachineBase implements ICo
 		if(recipe.input1 != null) tanks[0].setFill(tanks[0].getFill() - recipe.input1.fill);
 		if(recipe.input2 != null) tanks[1].setFill(tanks[1].getFill() - recipe.input2.fill);
 		if(recipe.solidInput != null) this.decrStackSize(1, recipe.solidInput.stacksize);
-		int mult = 1 << upgradeManager.ultimateCount;
-		tanks[2].setFill(tanks[2].getFill() + recipe.output * mult);
+		tanks[2].setFill(tanks[2].getFill() + recipe.output);
 	}
     
     public boolean setTargetFluidRC(FluidType type) {

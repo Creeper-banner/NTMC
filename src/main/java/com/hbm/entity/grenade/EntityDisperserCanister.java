@@ -1,8 +1,6 @@
 package com.hbm.entity.grenade;
 
 import com.hbm.entity.effect.EntityMist;
-import com.hbm.entity.logic.EntityNukeExplosionMK3;
-import com.hbm.entity.effect.EntityCloudFleija;
 import com.hbm.inventory.fluid.FluidType;
 import com.hbm.inventory.fluid.Fluids;
 import net.minecraft.entity.EntityLivingBase;
@@ -57,18 +55,6 @@ public class EntityDisperserCanister extends EntityGrenadeBase {
 			mist.setArea(10, 5);
 			mist.setDuration(80);
 			worldObj.spawnEntityInWorld(mist);
-			
-			if (getFluid() == Fluids.QGP) {
-				EntityNukeExplosionMK3 ex = EntityNukeExplosionMK3.statFacFleija(worldObj, posX, posY, posZ, 20);
-				if(!ex.isDead) {
-					worldObj.playSoundEffect(posX, posY, posZ, "random.explode", 100.0F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
-					worldObj.spawnEntityInWorld(ex);
-					EntityCloudFleija cloud = new EntityCloudFleija(worldObj, 20);
-					cloud.setPosition(posX, posY, posZ);
-					worldObj.spawnEntityInWorld(cloud);
-				}
-			}
-			
 			this.setDead();
 		}
 	}

@@ -186,9 +186,6 @@ public class ResourceManager {
 
 	//Centrifuge
 	public static final IModelCustom centrifuge = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/machines/centrifuge.obj")).asVBO();
-	public static final IModelCustom ams_base = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/ams_base.obj")).asVBO();
-	public static final IModelCustom ams_emitter = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/ams_emitter.obj")).asVBO();
-	public static final IModelCustom ams_limiter = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/ams_limiter.obj")).asVBO();
 	public static final IModelCustom gascent = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/machines/gascent.obj")).asVBO();
 	public static final IModelCustom silex = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/machines/silex.obj")).asVBO();
 	public static final IModelCustom fel = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/machines/fel.obj")).asVBO();
@@ -703,9 +700,6 @@ public class ResourceManager {
 
 	//Centrifuge
 	public static final ResourceLocation centrifuge_tex = new ResourceLocation(RefStrings.MODID, "textures/models/machines/centrifuge.png");
-	public static final ResourceLocation ams_base_tex = new ResourceLocation(RefStrings.MODID, "textures/models/ams_base.png");
-	public static final ResourceLocation ams_emitter_tex = new ResourceLocation(RefStrings.MODID, "textures/models/ams_emitter.png");
-	public static final ResourceLocation ams_limiter_tex = new ResourceLocation(RefStrings.MODID, "textures/models/ams_limiter.png");
 	public static final ResourceLocation gascent_tex = new ResourceLocation(RefStrings.MODID, "textures/models/machines/gascent.png");
 	public static final ResourceLocation fel_tex = new ResourceLocation(RefStrings.MODID, "textures/models/machines/fel.png");
 	public static final ResourceLocation silex_tex = new ResourceLocation(RefStrings.MODID, "textures/models/machines/silex.png");

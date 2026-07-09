@@ -45,11 +45,11 @@ public class NEIConfig implements IConfigureNEI {
 			registerHandlerBypass(new CustomMachineHandler(conf));
 		}
 
-		/*if(ClientConfig.NEI_HIDE_SECRETS.get()) {
+		if(ClientConfig.NEI_HIDE_SECRETS.get()) {
 			for(Item item : ItemGunBaseNT.secrets) API.hideItem(new ItemStack(item));
 			for(int i = 0; i < EnumAmmoSecret.values().length; i++) API.hideItem(new ItemStack(ModItems.ammo_secret, 1, i));
 			for(int i = 0; i < EnumSecretType.values().length; i++) API.hideItem(new ItemStack(ModItems.item_secret, 1, i));
-		}*/
+		}
 
 		for(int i = 0; i < EnumIngotMetal.values().length; i++) API.hideItem(new ItemStack(ModItems.ingot_metal, 1, i));
 

@@ -74,9 +74,6 @@ public class TileMappings {
 	public static List<Class<? extends IConfigurableMachine>> configurables = new ArrayList<Class<? extends IConfigurableMachine>>();
 
 	public static void writeMappings() {
-		put(TileEntityAMSBase.class, "tileentity_ams_base");
-		put(TileEntityAMSEmitter.class, "tileentity_ams_emitter");
-		put(TileEntityAMSLimiter.class, "tileentity_ams_limiter");
 		put(TileEntityDiFurnace.class, "tilentity_diFurnace");
 		put(TileEntityMachineBlastFurnace.class, "tilentity_blast_furnace");
 		put(TileEntityTestStorage.class, "tilentity_test_storage");
@@ -424,9 +421,6 @@ public class TileMappings {
 
 		put(TileEntityWatz.class, "tileentity_watz");
 		put(TileEntityWatzPump.class, "tileentity_watz_pump");
-		put(TileEntityAMSBase.class, "tileentity_ams_base");
-		put(TileEntityAMSEmitter.class, "tileentity_ams_emitter");
-		put(TileEntityAMSLimiter.class, "tileentity_ams_limiter");
 
 		put(TileEntityTransporterRocket.class, "tileentity_transporter");
 		put(TileEntityOrbitalStation.class, "tileentity_orbital_station");

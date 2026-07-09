@@ -14,10 +14,6 @@ import com.hbm.render.util.DiamondPronter;
 import com.hbm.tileentity.IPersistentNBT;
 import com.hbm.tileentity.machine.storage.TileEntityMachineFluidTank;
 
-import com.hbm.render.shader.Shader;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.OpenGlHelper;
-import org.lwjgl.opengl.GL20;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.Item;
@@ -27,8 +23,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
 
 public class RenderFluidTank extends TileEntitySpecialRenderer implements IItemRendererProvider {
-
-	private static Shader qgpShader = null;
 
 	@Override
 	public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float f) {
@@ -47,37 +41,9 @@ public class RenderFluidTank extends TileEntitySpecialRenderer implements IItemR
 		TileEntityMachineFluidTank tank = (TileEntityMachineFluidTank) tileEntity;
 		FluidType type = tank.tank.getTankType();
 
-		boolean isQgp = type != null && "QGP".equals(type.getName());
+		GL11.glShadeModel(GL11.GL_SMOOTH);
+		bindTexture(ResourceManager.tank_tex);
 		
-		if(isQgp) {
-			Minecraft mc = Minecraft.getMinecraft();
-			boolean hasFbo = OpenGlHelper.isFramebufferEnabled() && mc.getFramebuffer() != null;
-			int screenTex = hasFbo ? mc.getFramebuffer().framebufferTexture : 0;
-			float screenWidth = hasFbo ? mc.getFramebuffer().framebufferTextureWidth : mc.displayWidth;
-			float screenHeight = hasFbo ? mc.getFramebuffer().framebufferTextureHeight : mc.displayHeight;
-
-			if (hasFbo) {
-				OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit + 1);
-				GL11.glEnable(GL11.GL_TEXTURE_2D);
-				GL11.glBindTexture(GL11.GL_TEXTURE_2D, screenTex);
-				OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit);
-			}
-
-			if (qgpShader == null) {
-				qgpShader = new Shader(new ResourceLocation(RefStrings.MODID, "shaders/default.vert"), new ResourceLocation(RefStrings.MODID, "shaders/distortion.frag"));
-			}
-
-			qgpShader.use();
-			qgpShader.setUniform1f("iTime", (System.currentTimeMillis() % 100000) / 1000.0F);
-			qgpShader.setUniform1i("u_screenTexture", 1);
-			qgpShader.setUniform1f("u_screenWidth", screenWidth);
-			qgpShader.setUniform1f("u_screenHeight", screenHeight);
-			qgpShader.setUniform1i("u_hasFbo", hasFbo ? 1 : 0);
-			
-			int loc = qgpShader.getUniformLocation("u_iconUvRange");
-			GL20.glUniform4f(loc, 0.0F, 1.0F, 0.0F, 1.0F);
-		}
-
 		if(!tank.hasExploded) {
 			ResourceManager.fluidtank.renderPart("Frame");
 			bindTexture(new ResourceLocation(RefStrings.MODID, getTextureFromType(tank.tank.getTankType())));
@@ -88,18 +54,6 @@ public class RenderFluidTank extends TileEntitySpecialRenderer implements IItemR
 			ResourceManager.fluidtank_exploded.renderPart("TankInner");
 			bindTexture(new ResourceLocation(RefStrings.MODID, getTextureFromType(tank.tank.getTankType())));
 			ResourceManager.fluidtank_exploded.renderPart("Tank");
-		}
-
-		if(isQgp) {
-			qgpShader.stop();
-			Minecraft mc = Minecraft.getMinecraft();
-			boolean hasFbo = OpenGlHelper.isFramebufferEnabled() && mc.getFramebuffer() != null;
-			if (hasFbo) {
-				OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit + 1);
-				GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
-				GL11.glDisable(GL11.GL_TEXTURE_2D);
-				OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit);
-			}
 		}
 
 		GL11.glColor3d(1D, 1D, 1D);
@@ -128,10 +82,6 @@ public class RenderFluidTank extends TileEntitySpecialRenderer implements IItemR
 	}
 	
 	public String getTextureFromType(FluidType type) {
-		
-		if(type != null && "QGP".equals(type.getName())) {
-			return "textures/models/tank/tank_WATER.png";
-		}
 		
 		if(type.renderWithTint) {
 			int color = type.getTint();

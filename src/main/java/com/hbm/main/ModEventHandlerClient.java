@@ -137,8 +137,6 @@ import net.minecraftforge.oredict.OreDictionary;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL20;
-import com.hbm.render.shader.Shader;
 
 import java.lang.reflect.Method;
 import java.util.*;
@@ -149,14 +147,9 @@ public class ModEventHandlerClient {
 	public static long flashTimestamp;
 	public static final int shakeDuration = 1_500;
 	public static long shakeTimestamp;
-	public static int qgpDistortionTicks = 0;
-	private static Shader qgpFullscreenShader = null;
 
 	@SubscribeEvent
 	public void onOverlayRender(RenderGameOverlayEvent.Pre event) {
-		if(event.type == ElementType.CROSSHAIRS && qgpDistortionTicks > 0) {
-			renderQGPDistortion(event);
-		}
 
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 
@@ -1007,10 +1000,6 @@ public class ModEventHandlerClient {
 			if(BlockAshes.ashes > 0) BlockAshes.ashes -= 2;
 			if(BlockAshes.ashes < 0) BlockAshes.ashes = 0;
 
-			if(qgpDistortionTicks > 0) {
-				qgpDistortionTicks--;
-			}
-
 			if(mc.theWorld.getTotalWorldTime() % 20 == 0) {
 				lastBrightness = currentBrightness;
 				currentBrightness = mc.theWorld.getLightBrightnessForSkyBlocks(MathHelper.floor_double(mc.thePlayer.posX), MathHelper.floor_double(mc.thePlayer.posY), MathHelper.floor_double(mc.thePlayer.posZ), 0);
@@ -1594,67 +1583,6 @@ public class ModEventHandlerClient {
 
 			double d = Math.random();
 			if(d < 0.025) main.splashText = "Redditors aren't people!";
-		}
-	}
-
-	private void renderQGPDistortion(RenderGameOverlayEvent.Pre event) {
-		Minecraft mc = Minecraft.getMinecraft();
-		boolean hasFbo = OpenGlHelper.isFramebufferEnabled() && mc.getFramebuffer() != null;
-		if(hasFbo) {
-			int screenTex = mc.getFramebuffer().framebufferTexture;
-			float screenWidth = mc.getFramebuffer().framebufferTextureWidth;
-			float screenHeight = mc.getFramebuffer().framebufferTextureHeight;
-			int width = event.resolution.getScaledWidth();
-			int height = event.resolution.getScaledHeight();
-
-			GL11.glPushMatrix();
-
-			OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit + 1);
-			GL11.glEnable(GL11.GL_TEXTURE_2D);
-			GL11.glBindTexture(GL11.GL_TEXTURE_2D, screenTex);
-			OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit);
-
-			if(qgpFullscreenShader == null) {
-				qgpFullscreenShader = new Shader(new ResourceLocation(RefStrings.MODID, "shaders/qgp_mining_bomb_distortion.frag"));
-			}
-
-			qgpFullscreenShader.use();
-			qgpFullscreenShader.setUniform1f("iTime", (System.currentTimeMillis() % 100000) / 1000.0F);
-			qgpFullscreenShader.setUniform1i("u_screenTexture", 1);
-			qgpFullscreenShader.setUniform1f("u_screenWidth", screenWidth);
-			qgpFullscreenShader.setUniform1f("u_screenHeight", screenHeight);
-			qgpFullscreenShader.setUniform1i("u_hasFbo", 1);
-
-			float progress = (60.0F - qgpDistortionTicks) / 60.0F;
-			qgpFullscreenShader.setUniform1f("u_progress", progress);
-
-			int loc = qgpFullscreenShader.getUniformLocation("u_iconUvRange");
-			GL20.glUniform4f(loc, 0.0F, 1.0F, 0.0F, 1.0F);
-
-			GL11.glDisable(GL11.GL_CULL_FACE);
-			GL11.glEnable(GL11.GL_BLEND);
-			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-			GL11.glDepthMask(false);
-
-			Tessellator tess = Tessellator.instance;
-			tess.startDrawingQuads();
-			tess.addVertexWithUV(0, height, 0.0, 0.0, 0.0);
-			tess.addVertexWithUV(width, height, 0.0, 1.0, 0.0);
-			tess.addVertexWithUV(width, 0, 0.0, 1.0, 1.0);
-			tess.addVertexWithUV(0, 0, 0.0, 0.0, 1.0);
-			tess.draw();
-
-			GL11.glDepthMask(true);
-			GL11.glEnable(GL11.GL_CULL_FACE);
-
-			qgpFullscreenShader.stop();
-
-			OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit + 1);
-			GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
-			GL11.glDisable(GL11.GL_TEXTURE_2D);
-			OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit);
-
-			GL11.glPopMatrix();
 		}
 	}
 }

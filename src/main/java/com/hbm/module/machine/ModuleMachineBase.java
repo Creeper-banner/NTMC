@@ -31,8 +31,6 @@ public abstract class ModuleMachineBase {
 	public boolean didProcess = false;
 	public boolean markDirty = false;
 	public boolean restrictedMode = false;
-	public boolean hasUltimate = false;
-	public int ultimateCount = 0;
 
 	public ModuleMachineBase(int index, IEnergyHandlerMK2 battery, ItemStack[] slots) {
 		this.index = index;
@@ -98,7 +96,6 @@ public abstract class ModuleMachineBase {
 	/** Whether (and how many times) the machine can hold the output produced by the recipe */
 	protected int fitOutput(GenericRecipe recipe, int count) {
 		
-		int factor = 1 << this.ultimateCount;
 		if(recipe.outputItem != null) {
 			for(int i = 0; i < Math.min(recipe.outputItem.length, outputSlots.length); i++) {
 				ItemStack stack = slots[outputSlots[i]];
@@ -107,14 +104,14 @@ public abstract class ModuleMachineBase {
                 ItemStack single = output.getSingle();
 
                 if(stack == null) {
-                    count = Math.min(count, single.getMaxStackSize() / (single.stackSize * factor));
+                    count = Math.min(count, single.getMaxStackSize() / single.stackSize);
                     continue; // always continue if output slot is free
                 }
 
 				if(single == null) return 0; // shouldn't be possible but better safe than sorry
 				if(stack.getItem() != single.getItem()) return 0;
 				if(stack.getItemDamage() != single.getItemDamage()) return 0;
-                count = Math.min(count, (stack.getMaxStackSize() - stack.stackSize) / (single.stackSize * factor));
+                count = Math.min(count, (stack.getMaxStackSize() - stack.stackSize) / single.stackSize);
 
                 if(count == 0) return 0;
 			}
@@ -122,7 +119,7 @@ public abstract class ModuleMachineBase {
 		
 		if(recipe.outputFluid != null) {
 			for(int i = 0; i < Math.min(recipe.outputFluid.length, outputTanks.length); i++) {
-                count = Math.min(count, (outputTanks[i].getMaxFill() - outputTanks[i].getFill()) / (recipe.outputFluid[i].fill * factor));
+                count = Math.min(count, (outputTanks[i].getMaxFill() - outputTanks[i].getFill()) / recipe.outputFluid[i].fill);
                 if(count == 0) return 0;
 			}
 		}
@@ -167,11 +164,10 @@ public abstract class ModuleMachineBase {
 	/** Part 2 of the process completion, generated output */
 	protected void produceItem(GenericRecipe recipe, int multi) {
 		
-		int mult = multi * (1 << this.ultimateCount);
 		if(recipe.outputItem != null) {
 			for(int i = 0; i < Math.min(recipe.outputItem.length, outputSlots.length); i++) {
 				ItemStack collapse = recipe.outputItem[i].collapse();
-                if(collapse != null) collapse.stackSize *= (1 << this.ultimateCount);
+                if(collapse != null) collapse.stackSize *= multi;
 				if(slots[outputSlots[i]] == null) {
 					slots[outputSlots[i]] = collapse;
 				} else {
@@ -182,7 +178,7 @@ public abstract class ModuleMachineBase {
 		
 		if(recipe.outputFluid != null) {
 			for(int i = 0; i < Math.min(recipe.outputFluid.length, outputTanks.length); i++) {
-				outputTanks[i].setFill(outputTanks[i].getFill() + mult * recipe.outputFluid[i].fill);
+				outputTanks[i].setFill(outputTanks[i].getFill() + multi * recipe.outputFluid[i].fill);
 			}
 		}
 		
