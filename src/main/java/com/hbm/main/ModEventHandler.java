@@ -597,10 +597,10 @@ public class ModEventHandler {
 						}
 					}
 				}
-
-				EntityRailCarBase.updateMotion(world);
 			}
-			
+
+			EntityRailCarBase.updateMotion(world);
+
 			if(time % 20 == 0) {
 				BlockPedestal.checkPedestalEntries(world.provider.dimensionId, time);
 			}
