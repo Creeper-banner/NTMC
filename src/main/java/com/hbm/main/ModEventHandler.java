@@ -873,9 +873,11 @@ public class ModEventHandler {
 						HazardSystem.updateDroppedItem(item);
 					}
 				}
-				EntityRailCarBase.updateMotion(world);
 			}
-			
+			}
+
+			EntityRailCarBase.updateMotion(world);
+
 			if(time % 20 == 0) {
 				BlockPedestal.checkPedestalEntries(world.provider.dimensionId, time);
 			}
@@ -917,7 +919,6 @@ public class ModEventHandler {
 				}
 			}
         }
-	}
 	}
 
 	private void updateWaterOpacity(World world) {
