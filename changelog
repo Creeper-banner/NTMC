@@ -1,1 +1,13 @@
-Includes all changes and bugfixes from the latest upstream NTMain update - [X5719 - farewell to a friend](https://github.com/HbmMods/Hbm-s-Nuclear-Tech-GIT/releases/tag/1.0.27_X5719)
+Includes all changes and bugfixes from the latest upstream NTMain update - [X5751 - unleashing the curse of bald (fatal) ](https://github.com/HbmMods/Hbm-s-Nuclear-Tech-GIT/releases/tag/1.0.27_X5751)
+
+## Changed
+* Added criteria for secret overdrive mode??
+* Improved errors for station propulsion
+* Saltleaf is now edible (Laythe start approaches)
+* Improved Angelica shader compat (for those using Bountiful Stars)
+
+## Fixed
+* Air intake can dupe compressed air (if you need compressed air in a vacuum, you can use the air intake in a room full of any gas except compressed air)
+* Titanium deco has 16 variants for no reason
+* Crash on oil blob generation on celestials
+* Crash when setting gas output of oil blocks to 0 in config

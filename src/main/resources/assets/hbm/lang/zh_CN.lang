@@ -5511,10 +5511,12 @@ tile.machine_autocrafter.name=自动工作台
 tile.machine_autosaw.name=自动嗡嗡锯
 tile.machine_autosaw.desc=砍伐附近的植物，重新种植树木$接受：$-木油$-乙醇$-鱼油$-重油$-煤焦杂酚油
 
-tile.machine_autosaw.suspended=暂停
-tile.machine_battery.name=蓄电池（遗留）
-tile.machine_battery_potato.name=马铃薯电池组（遗留）
 tile.machine_battery_redd.name=FEnSU
+
+tile.machine_autosaw.suspended=暂停
+tile.machine_bat9000.name=巨尻-9000 储罐（遗留）
+tile.machine_battery.name=蓄电池 (遗留)
+tile.machine_battery_potato.name=马铃薯电池组 (遗留)
 
 tile.machine_boiler.name=大型锅炉
 tile.machine_boiler.desc=可以烧水或加热油的大型锅炉$需要外部热源$传热速率：ΔT*0.1 TU/T
@@ -5553,14 +5555,12 @@ tile.machine_detector.name=功率检测器
 tile.machine_deuterium_extractor.name=氘提取器
 tile.machine_deuterium_tower.name=氘萃取塔
 tile.machine_diesel.name=柴油发电机
-
 tile.machine_difurnace_extension.name=高炉烟道（遗留）
 tile.machine_difurnace_off.name=高炉（遗留）
 tile.machine_difurnace_on.name=高炉（遗留）
 tile.machine_difurnace_rtg_off.name=核高炉（遗留）
 tile.machine_difurnace_rtg_on.name=核高炉（遗留）
-tile.machine_dineutronium_battery.name=Spark蓄电池（遗留）
-
+tile.machine_dineutronium_battery.name=Spark蓄电池 (遗留)
 tile.machine_drain.name=排液管
 tile.machine_drill.name=自动采矿钻机
 tile.machine_electric_furnace_off.name=电炉

@@ -215,7 +215,7 @@ public class BlockPedestal extends BlockContainer {
 				if(this.item != null) {
 					if(item.getItem() == ModItems.protection_charm) pushPedestalEntry(worldObj, PedestalEntryType.CHARM_OF_PROTECTION, xCoord, yCoord, zCoord);
 					if(item.getItem() == ModItems.meteor_charm) pushPedestalEntry(worldObj, PedestalEntryType.METEORITE_CHARM, xCoord, yCoord, zCoord);
-					if(worldObj.getTotalWorldTime() % 60 == 0 && item.getItem() == ModItems.defuser) castrateCreepers();
+					if(worldObj.getTotalWorldTime() % 60 == 0 && item.getItem() == ModItems.defuser_gold) castrateCreepers();
 				}
 			}
 		}
@@ -224,7 +224,7 @@ public class BlockPedestal extends BlockContainer {
 			List<EntityCreeper> creepers = worldObj.getEntitiesWithinAABB(EntityCreeper.class, AxisAlignedBB.getBoundingBox(xCoord, yCoord, zCoord, xCoord + 1, yCoord + 1, zCoord + 1).expand(25, 25, 25));
 			for(EntityCreeper creeper : creepers) ItemModDefuser.castrateCreeper(creeper, null, false);
 		}
-
+		
 		@Override
 		public Packet getDescriptionPacket() {
 			NBTTagCompound nbt = new NBTTagCompound();

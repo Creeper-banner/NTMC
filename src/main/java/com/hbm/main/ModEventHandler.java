@@ -836,8 +836,6 @@ public class ModEventHandler {
 			int tickrate = Math.max(1, ServerConfig.ITEM_HAZARD_DROP_TICKRATE.get());
 
 			for(Object e : loadedEntityList) {
-				if(time % tickrate == 0) {
-
 				if(e instanceof EntityPlayer) {
 					EntityPlayer player = (EntityPlayer) e;
 
@@ -874,7 +872,6 @@ public class ModEventHandler {
 					}
 				}
 			}
-			}
 
 			EntityRailCarBase.updateMotion(world);
 
@@ -893,6 +890,10 @@ public class ModEventHandler {
 				}
 			}
 
+			if(time % 20 == 0) {
+				BlockPedestal.checkPedestalEntries(world.provider.dimensionId, time);
+			}
+
 			// Tick our per celestial body timer
 			if(event.phase == Phase.START && event.world.provider instanceof WorldProviderCelestial && event.world.provider.dimensionId != 0) {
 				if(event.world.getGameRules().getGameRuleBooleanValue("doDaylightCycle")) {
@@ -903,8 +904,8 @@ public class ModEventHandler {
 		}
 
 		if(event.phase == Phase.START) {
-			BossSpawnHandler.rollTheDice(event.world);
-			TimedGenerator.automaton(event.world, 100);
+			BossSpawnHandler.rollTheDice(world);
+			TimedGenerator.automaton(world, 100);
 
 			updateWaterOpacity(event.world);
 		}

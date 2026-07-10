@@ -316,7 +316,7 @@ public class TileEntityDoorGeneric extends TileEntityLockableBase {
 			}
 		}
 	}
-
+	
 	public float getVolume() {
 		return getVolume(doorType.getSoundVolume());
 	}

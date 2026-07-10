@@ -122,8 +122,10 @@ public class BulletConfiguration implements Cloneable {
 	public boolean dmgExplosion = false;
 	public boolean dmgBypass = false;
 
-
 	public static final int STYLE_NONE = -1;
+	private static final int SPACE_OFFSET = 128;
+
+
 	public static final int STYLE_NORMAL = 0;
 	public static final int STYLE_PISTOL = 1;
 	public static final int STYLE_FLECHETTE = 2;
@@ -138,9 +140,11 @@ public class BulletConfiguration implements Cloneable {
 	public static final int STYLE_METEOR = 13;
 	public static final int STYLE_APDS = 14;
 	public static final int STYLE_BLADE = 15;
-	public static final int STYLE_TAU = 17;
-	public static final int STYLE_LEADBURSTER = 18;
-	public static final int STYLE_WAR = 19;
+
+	//public static final int STYLE_TAU = 17;
+	//public static final int STYLE_LEADBURSTER = 18;
+
+	public static final int STYLE_WAR = SPACE_OFFSET + 0;
 
 	public static final int PLINK_NONE = 0;
 	public static final int PLINK_BULLET = 1;
@@ -174,36 +178,37 @@ public class BulletConfiguration implements Cloneable {
 		return this;
 	}
 
-	public BulletConfiguration getChlorophyte() {
-		this.bntUpdate = BulletConfigFactory.getHomingBehavior(30, 180);
-		this.bntHurt = BulletConfigFactory.getPenHomingBehavior();
-		this.dmgMin *= 2F;
-		this.dmgMax *= 2F;
-		this.wear *= 0.5;
-		this.velocity *= 0.3;
-		this.doesRicochet = false;
-		this.doesPenetrate = true;
-		this.vPFX = "greendust";
+// 	public BulletConfiguration getChlorophyte() {
+// 		this.bntUpdate = BulletConfigFactory.getHomingBehavior(30, 180);
+// 		this.bntHurt = BulletConfigFactory.getPenHomingBehavior();
+// 		this.dmgMin *= 2F;
+// 		this.dmgMax *= 2F;
+// 		this.wear *= 0.5;
+// 		this.velocity *= 0.3;
+// 		this.doesRicochet = false;
+// 		this.doesPenetrate = true;
+// 		this.vPFX = "greendust";
+//
+// 		if(this.spentCasing != null) {
+// 			int[] colors = this.spentCasing.getColors();
+// 			this.spentCasing = this.spentCasing.clone();
+//
+// 			if(colors != null && colors.length > 0) {
+// 				int[] colorClone = new int[colors.length];
+// 				for(int i = 0; i < colors.length; i++) colorClone[i] = colors[i];
+// 				colorClone[colorClone.length - 1] = 0x659750; // <- standard chlorophyte coloring in last place
+// 				this.spentCasing.setColor(colorClone).register(this.spentCasing.getName() + "Cl");
+// 			}
+// 		}
+//
+// 		return this;
+// 	}
+//
+// 	public BulletConfiguration setToHoming(ItemStack ammo) {
+// 		this.ammo = new ComparableStack(ammo);
+// 		return getChlorophyte();
+// 	}
 
-		if(this.spentCasing != null) {
-			int[] colors = this.spentCasing.getColors();
-			this.spentCasing = this.spentCasing.clone();
-
-			if(colors != null && colors.length > 0) {
-				int[] colorClone = new int[colors.length];
-				for(int i = 0; i < colors.length; i++) colorClone[i] = colors[i];
-				colorClone[colorClone.length - 1] = 0x659750; // <- standard chlorophyte coloring in last place
-				this.spentCasing.setColor(colorClone).register(this.spentCasing.getName() + "Cl");
-			}
-		}
-
-		return this;
-	}
-
-	public BulletConfiguration setToHoming(ItemStack ammo) {
-		this.ammo = new ComparableStack(ammo);
-		return getChlorophyte();
-	}
 	public BulletConfiguration accuracyMod(float mod) {
 
 		this.spread *= mod;

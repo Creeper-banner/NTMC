@@ -76,7 +76,7 @@ public class ServerProxy {
 	public EntityPlayer me() {
 		return null;
 	}
-
+	
 	public boolean advancedTooltips() { return false; }
 
 	public boolean isVanished(Entity e) {

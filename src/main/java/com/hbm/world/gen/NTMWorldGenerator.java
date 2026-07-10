@@ -23,11 +23,8 @@ import net.minecraftforge.event.world.WorldEvent;
 
 public class NTMWorldGenerator implements IWorldGenerator {
 
-	public static boolean isInvalidBiome(BiomeGenBase biome) {
-		return BiomeDictionary.isBiomeOfType(biome, Type.OCEAN) || BiomeDictionary.isBiomeOfType(biome, Type.RIVER);
-    }
+	boolean regTest = false;
 
-	// boolean regTest = false;
 	
 	/** Includes all biomes tagged as ocean or river */
 	public static boolean isWaterBiome(BiomeGenBase biome) {

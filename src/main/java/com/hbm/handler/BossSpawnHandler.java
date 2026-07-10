@@ -53,31 +53,31 @@ public class BossSpawnHandler {
 		 * - the player has either crafted or placed an ore acidizer before
 		 */
 		if(MobConfig.enableMaskman && world.getTotalWorldTime() % 20 == 0 && world.provider.isSurfaceWorld() && world.difficultySetting != EnumDifficulty.PEACEFUL) {
-
+			
 			for(Object o : world.playerEntities) {
 				if(!(o instanceof EntityPlayerMP)) return;
 				EntityPlayerMP player = (EntityPlayerMP) o;
-
+				
 				int id = Item.getIdFromItem(Item.getItemFromBlock(ModBlocks.machine_crystallizer));
 				StatBase statCraft = StatList.objectCraftStats[id];
 				StatBase statPlace = StatList.objectUseStats[id];
-
+				
 				boolean acidizerStat = !GeneralConfig.enableStatReRegistering || (statCraft != null && player.func_147099_x().writeStat(statCraft) > 0)|| (statPlace != null && player.func_147099_x().writeStat(statPlace) > 0);
 				boolean hasRads = ContaminationUtil.getRads(player) >= MobConfig.maskmanMinRad;
 				boolean underground = world.getHeightValue((int) Math.floor(player.posX), (int) Math.floor(player.posZ)) > player.posY + 3 || !MobConfig.maskmanUnderground;
-
+				
 				if(acidizerStat && hasRads && underground) {
 					HbmPlayerProps data = HbmPlayerProps.getData(player);
-
+					
 					data.maskManTimer++;
-
+					
 					if(data.maskManTimer == MobConfig.maskmanDelay - 20 * 60) {
 						player.addChatComponentMessage(new ChatComponentText("The mask man draws near.").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
 					}
-
+					
 					if(data.maskManTimer >= MobConfig.maskmanDelay) {
 						data.maskManTimer = 0;
-
+						
 						double spawnX = player.posX + world.rand.nextGaussian() * 20;
 						double spawnZ = player.posZ + world.rand.nextGaussian() * 20;
 						double spawnY = world.getHeightValue((int) Math.floor(spawnX), (int) Math.floor(spawnZ));
@@ -236,7 +236,7 @@ public class BossSpawnHandler {
 							}
 						}
 					}
-
+					
 					// only check if either charm is not present
 					if(!repell || strike) {
 						int x = (int) Math.floor(p.posX);

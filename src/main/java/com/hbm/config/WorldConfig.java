@@ -93,7 +93,6 @@ public class WorldConfig {
 	public static double ikeBrineDrainChance = 0.05D;
 
 
-	public static boolean newBedrockOres = true;
 
 	public static int bedrockIronSpawn = 100;
 	public static int bedrockCopperSpawn = 200;

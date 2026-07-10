@@ -201,7 +201,7 @@ public class BobMathUtil {
 	}
 
 	public static String getShortNumber(long l) {
-
+		
 		double res;
 		String suffix = "";
 		long abs = Math.abs(l);
